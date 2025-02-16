@@ -29,7 +29,8 @@ if(isset($_POST['submit']))
                 $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
 
                 if (in_array(strtolower($fileExtension), $allowedExtensions)) {
-                    $newFileName = uniqid('stay_', true) . '.' . $fileExtension;
+                    $rephaseName = str_replace(' ', '_', $name);
+                    $newFileName = uniqid($rephaseName.'_', true) . '.' . $fileExtension;
                     $fileDestination = '../../assets/images/accommodations/' . $newFileName;
 
                     // Ensure the uploads folder exists

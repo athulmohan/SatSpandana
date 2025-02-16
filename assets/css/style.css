@@ -662,7 +662,17 @@ header {
   font-family: fantasy;
 }
 .ayurveda-bg-img {
-  background-image: url("../images/gallery/gallery-ayur-03.webp");
+  background-image: url("../images/gallery/gallery-ayur-01.webp");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 0.3; */
+  color: #ffffff;
+}
+.ayurveda-bg-img-2 {
+  background-image: url("../images/gallery/gallery-ayur-04.jpg");
   min-height: 500px;
   background-attachment: fixed;
   background-position: center;
@@ -681,8 +691,48 @@ header {
   /* opacity: 0.3; */
   color: #ffffff;
 }
-.physiotherapy-bg-img {
-  background-image: url("../images/gallery/gallery-physio-04.jpg");
+.physiotherapy-bg-img-1 {
+  background-image: url("../images/gallery/gallery-physio-05.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 0.3; */
+  color: #ffffff;
+}
+.physiotherapy-bg-img-2 {
+  background-image: url("../images/gallery/gallery-physio-06.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 0.3; */
+  color: #ffffff;
+}
+.physiotherapy-bg-img-3 {
+  background-image: url("../images/gallery/gallery-physio-07.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 0.3; */
+  color: #ffffff;
+}
+.physiotherapy-bg-img-4 {
+  background-image: url("../images/gallery/gallery-physio-03.jpeg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* opacity: 0.3; */
+  color: #ffffff;
+}
+.physiotherapy-bg-img-5 {
+  background-image: url("../images/gallery/gallery-physio-02.jpg");
   min-height: 500px;
   background-attachment: fixed;
   background-position: center;

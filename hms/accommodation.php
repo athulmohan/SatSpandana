@@ -79,10 +79,15 @@
             $ret=mysqli_query($con,"select * from  accommodations");
             while ($row=mysqli_fetch_array($ret)) {
             $unSerilazedImages = json_decode(str_replace("'", '"', $row['images']));
+            $rephraseName = str_replace(' ', '_', $row['name']);
+            
+            $folder = "../assets/images/accommodations/"; // Specify your folder path
+            $prefix = $rephraseName . "_"; // Specify the prefix
+            $getFiles = glob($folder . $prefix . "*"); // Get files matching the pattern
         ?>
             <div class="profile-card">
                 <!-- Left Section: Text -->
-                <div class="col-md-6 profile-details">
+                <div class="<?php (isset($unSerilazedImages) && isset($getFiles) && !empty($getFiles)) ? 'col-md-6' : 'col-md-12' ?> profile-details">
                     <h1 class="profile-title"><?php echo $row['name']; ?></h1>
                     <h2 class="profile-subtitle"><?php echo $row['caption']; ?></h2>
                     <p class="profile-description">
@@ -94,50 +99,53 @@
                 </div>
 
                 <!-- Right Section: Image -->
-                <div class="slider-detail col-md-6 position-relative ">
-                    <div class="carouselSliderChanges" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                        <div class="row">
-                            <?php
-                                foreach ($unSerilazedImages as $index => $image) {
-                                ?>
-                                    <div class="accommodation_img_list gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter">
-                                        <img src="<?php echo '../assets/images/accommodations/'.$image; ?>" class="accommodation_img gallery_img img-responsive <?php echo ($index > 6) ? 'd-none' : ''; ?>" onclick="openModal(<?php echo $index; ?>)">
-                                    </div>
+                <?php if(isset($unSerilazedImages) && isset($getFiles) && !empty($getFiles)) { ?>
+                    <div class="slider-detail col-md-6 position-relative ">
+                        <div class="carouselSliderChanges" id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <div class="row">
                                 <?php
-                                } 
-                            ?>
-                            <!-- <ol class="carousel-indicators">
-                                <?php 
-                                // foreach ($unSerilazedImages as $i => $image) { 
-                                //     $activeClass = ($i === 0) ? "active" : "";
+                                    foreach ($unSerilazedImages as $index => $image) {
                                     ?>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="<?php //echo $i; ?>" class="<?php //echo $activeClass; ?>"></li>
-                                <?php //} ?>
-                            </ol>
-                            <div class="carousel-inner">
-                                <?php 
+                                        <div class="accommodation_img_list gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter">
+                                            <img src="<?php echo '../assets/images/accommodations/'.$image; ?>" class="accommodation_img gallery_img img-responsive <?php echo ($index > 6) ? 'd-none' : ''; ?>" onclick="openModal(<?php echo $index; ?>)">
+                                        </div>
+                                    <?php
+                                    } 
+                                ?>
+                                <!-- <ol class="carousel-indicators">
+                                    <?php 
                                     // foreach ($unSerilazedImages as $i => $image) { 
                                     //     $activeClass = ($i === 0) ? "active" : "";
-                                    ?>
-                                    <div class="carousel-item <?php //echo $activeClass; ?>">
-                                        <a href="<?php //echo '../assets/images/accommodations/' . $image; ?>" target="_blank">
-                                            <img class="d-block w-100" src="<?php //echo '../assets/images/accommodations/' . $image; ?>" alt="<?php //echo 'Slide-'. $i; ?>">
-                                            <div class="carousel-cover"></div>
-                                        </a>
-                                    </div>
-                                <?php //} ?>
+                                        ?>
+                                        <li data-target="#carouselExampleIndicators" data-slide-to="<?php //echo $i; ?>" class="<?php //echo $activeClass; ?>"></li>
+                                    <?php //} ?>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <?php 
+                                        // foreach ($unSerilazedImages as $i => $image) { 
+                                        //     $activeClass = ($i === 0) ? "active" : "";
+                                        ?>
+                                        <div class="carousel-item <?php //echo $activeClass; ?>">
+                                            <a href="<?php //echo '../assets/images/accommodations/' . $image; ?>" target="_blank">
+                                                <img class="d-block w-100" src="<?php //echo '../assets/images/accommodations/' . $image; ?>" alt="<?php //echo 'Slide-'. $i; ?>">
+                                                <div class="carousel-cover"></div>
+                                            </a>
+                                        </div>
+                                    <?php //} ?>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a> -->
                             </div>
-                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a> -->
                         </div>
                     </div>
-                </div>
+                <?php } ?>
+                
                 <!-- Modal for Viewing Image with Navigation -->
                 <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">

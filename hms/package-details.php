@@ -33,7 +33,7 @@ while($package=mysqli_fetch_assoc($packageSql)) {
                 <p>Take a look at some of our key <?php echo $package['specialization']; ?> Packages</p>
             </div>
         <?php } ?>
-        <div class="<?php echo strtolower($package['specialization']); ?>-bg-img">
+        <div class="<?php echo strtolower($package['specialization']); ?>-bg-img-<?php echo $ind; ?>">
             <div class="container">
                 <div class="row content-bg-layer">
                     <div id="therapy" class="therapy mt-5">
