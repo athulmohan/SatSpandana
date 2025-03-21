@@ -112,11 +112,11 @@
                 <div class="col-md-6 col-sm-12">
                     <h2>Useful Links</h2>
                     <ul class="list-unstyled link-list">
-                        <li><a ui-sref="about" href="#about">About us</a><i class="fa fa-angle-right"></i></li>
-                        <li><a ui-sref="portfolio" href="#services">Services</a><i class="fa fa-angle-right"></i></li>
-                        <li><a ui-sref="products" href="#logins">Logins</a><i class="fa fa-angle-right"></i></li>
-                        <li><a ui-sref="gallery" href="#gallery">Gallery</a><i class="fa fa-angle-right"></i></li>
-                        <li><a ui-sref="contact" href="#contact">Contact us</a><i class="fa fa-angle-right"></i></li>
+                        <li><a ui-sref="about" href="../index.php#about_us">About us</a><i class="fa fa-angle-right"></i></li>
+                        <li><a ui-sref="portfolio" href="../index.php#services">Services</a><i class="fa fa-angle-right"></i></li>
+                        <!-- <li><a ui-sref="products" href="../index.php#logins">Logins</a><i class="fa fa-angle-right"></i></li> -->
+                        <li><a ui-sref="gallery" href="../index.php#gallery">Gallery</a><i class="fa fa-angle-right"></i></li>
+                        <li><a ui-sref="contact" href="../index.php#contact_us">Contact us</a><i class="fa fa-angle-right"></i></li>
                     </ul>
                 </div>
                 <div class="col-md-6 col-sm-12 map-img">

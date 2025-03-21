@@ -101,6 +101,8 @@ if(isset($_POST['submit']))
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
             </ol>
 
             <div class="carousel-inner">
@@ -117,6 +119,28 @@ if(isset($_POST['submit']))
 
                 <div class="carousel-item">
                     <img class="d-block w-100" src="assets/images/slider/slider_2.jpg" alt="Second slide">
+                    <div class="carousel-cover"></div>
+                    <div class="carousel-caption vdg-cur d-none d-md-block service-list">
+                        <span class="animated bounceInDown text-uppercase service-item">WELLNESS</span>
+                        <span class="animated bounceInDown text-uppercase service-item">PHYSIOTHERAPY</span>
+                        <span class="animated bounceInDown text-uppercase service-item">YOGA</span>
+                        <span class="animated bounceInDown text-uppercase service-item">AYURVEDA</span>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="assets/images/slider/slider_3.jpg" alt="Third slide">
+                    <div class="carousel-cover"></div>
+                    <div class="carousel-caption vdg-cur d-none d-md-block service-list">
+                        <span class="animated bounceInDown text-uppercase service-item">WELLNESS</span>
+                        <span class="animated bounceInDown text-uppercase service-item">PHYSIOTHERAPY</span>
+                        <span class="animated bounceInDown text-uppercase service-item">YOGA</span>
+                        <span class="animated bounceInDown text-uppercase service-item">AYURVEDA</span>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="assets/images/slider/slider_4.jpg" alt="Third slide">
                     <div class="carousel-cover"></div>
                     <div class="carousel-caption vdg-cur d-none d-md-block service-list">
                         <span class="animated bounceInDown text-uppercase service-item">WELLNESS</span>
@@ -416,7 +440,7 @@ if(isset($_POST['submit']))
                             <li><a ui-sref="contact_us" href="#contact_us">Contact us</a><i class="fa fa-angle-right"></i></li>
                         </ul>
                     </div>
-                    <div class="getInTouch">
+                    <!-- <div class="getInTouch">
                         <h2>Quick Links</h2>
                         <ul class="list-unstyled link-list">
                             <li><a ui-sref="about_us" href="#about_us">About us</a><i class="fa fa-angle-right"></i></li>
@@ -424,7 +448,7 @@ if(isset($_POST['submit']))
                             <li><a ui-sref="gallery" href="#gallery">Gallery</a><i class="fa fa-angle-right"></i></li>
                             <li><a ui-sref="contact_us" href="#contact_us">Contact us</a><i class="fa fa-angle-right"></i></li>
                         </ul>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-md-6 col-sm-12 map-img">
                     <h2>Contact Us</h2>
