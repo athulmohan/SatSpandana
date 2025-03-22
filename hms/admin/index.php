@@ -66,8 +66,11 @@ $_SESSION['errmsg']="Invalid username or password";
                         </legend>
                         <p>
                             Please enter your name and password to log in.<br />
-                            <span
-                                style="color:red;"><?php echo htmlentities($_SESSION['errmsg']); ?><?php echo htmlentities($_SESSION['errmsg']="");?></span>
+                            <?php if(isset($_SESSION['errmsg']) && $_SESSION['errmsg'] !== '') { ?>
+                                <span style="color:red;">
+                                    <?php echo htmlentities($_SESSION['errmsg']); ?>
+                                </span>
+                            <?php } ?>
                         </p>
                         <div class="form-group">
                             <span class="input-icon">

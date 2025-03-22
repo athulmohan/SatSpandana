@@ -37,9 +37,10 @@ if(isset($_POST['submit']))
                     <div class="col-lg-2 col-md-3 col-sm-12">
                         <a href="javascript:void(0);">
                             <img src="assets/images/satspandana-logo-png.png" alt="SAT SPANDANA">
-                            <!-- <div class="col-lg-2 col-md-3  col-sm-12" style="color:#000;font-weight:bold; font-size:42px; margin-top: 1% !important;">SPANDANA
-                            <a data-toggle="collapse" data-target="#menu" href="#menu" ><i class="fas d-block d-md-none small-menu fa-bars"></i></a>
-                            </div> -->
+                            <div class="col-lg-2 col-md-3 col-sm-12" style="color:#000;font-weight:bold; font-size:42px; margin-top: 1% !important; margin-bottom:1%;">
+                                <!-- SATSPANDANA -->
+                                <a data-toggle="collapse" data-target="#menu" href="#menu" ><i class="fas d-block d-md-none small-menu fa-bars"></i></a>
+                            </div>
                         </a>
                     </div>
                     <div id="menu" class="col-lg-8 col-md-9 d-none d-md-block nav-item">
