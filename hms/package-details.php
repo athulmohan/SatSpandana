@@ -22,10 +22,8 @@ while($package=mysqli_fetch_assoc($packageSql)) {
     $packageDetailsSql = mysqli_query($con, $sql);
 ?>
     <?php
-
+    include_once('service-details.php');
     if(strtolower($packageParam) === strtolower($package['specialization']) || strtolower($packageParam) === 'all') {
-
-        include_once('service-details.php');
 
         if($specialization !== $package['specialization']) { ?>
             <div class="mt-3 inner-title">
@@ -33,9 +31,9 @@ while($package=mysqli_fetch_assoc($packageSql)) {
                 <p>Take a look at some of our key <?php echo $package['specialization']; ?> Packages</p>
             </div>
         <?php } ?>
-        <div class="<?php echo strtolower($package['specialization']); ?>-bg-img-<?php echo $ind; ?>">
+        <div class="package-bg-img <?php echo strtolower($package['specialization']); ?>-bg-img-<?php echo $ind; ?>">
             <div class="container">
-                <div class="row content-bg-layer">
+                <div class="content-bg-layer">
                     <div id="therapy" class="therapy mt-5">
                         <hr>
                         </hr>
@@ -44,7 +42,7 @@ while($package=mysqli_fetch_assoc($packageSql)) {
                         </hr>
                         <p><?php echo $package['description']; ?></p>
 
-                        <div class="row mt-5">
+                        <div class="mt-5">
                             <div class="col-md-12">
                                 <table id="<?php echo $tbCls; ?>" class="table table-striped physio-dataTable" style="width:100%">
                                     <thead>

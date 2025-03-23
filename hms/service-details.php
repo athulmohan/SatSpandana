@@ -11,7 +11,7 @@
                 <div class="inner-title pt-0 mb-0">
                     <h3><?php echo strtoupper($packageParam); ?></h3>
                 </div>
-                <div class="<?php echo strtolower($service['specilization']); ?>-bg-img-<?php echo $i; ?>">
+                <div class="package-bg-img <?php echo strtolower($service['specilization']); ?>-bg-img-<?php echo $i; ?>">
                     <div class="container">
                         <div class="row content-bg-layer">
                             <div id="<?php echo strtolower($service['specilization']); ?>-service" class="services mt-5">
