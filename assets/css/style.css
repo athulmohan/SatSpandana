@@ -118,7 +118,7 @@ body {
   .inner-title h2 {
     width: 100%;
     text-align: center;
-    font-size: 2rem;
+    font-size: 2rem !important;
     font-family: "slab", Arial, Helvetica, sans-serif; }
   .inner-title h3 {
     width: 100%;

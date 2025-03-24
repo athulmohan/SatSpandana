@@ -338,7 +338,6 @@ if(isset($_POST['submit']))
     <div id="gallery" class="gallery">
         <div class="container">
             <div class="inner-title">
-
                 <h2>Our Gallery</h2>
                 <p>View Our Gallery</p>
             </div>
@@ -359,8 +358,8 @@ if(isset($_POST['submit']))
                     $totalGalleryImgCount = count($galleryImages);
                     foreach ($galleryImages as $index => $image) {
                     ?>
-                        <div class="gallery_product col-lg-2 col-md-4 col-sm-4 col-xs-6 filter">
-                            <img src="<?php echo $image; ?>" class="gallery_img img-responsive <?php echo ($index > 17) ? 'd-none' : ''; ?>" onclick="openModal(<?php echo $index; ?>)">
+                        <div class="gallery_product col-lg-2 col-md-4 col-sm-4 col-xs-6 filter <?php echo ($index > 17) ? 'd-none' : ''; ?>">
+                            <img src="<?php echo $image; ?>" class="gallery_img img-responsive" onclick="openModal(<?php echo $index; ?>)">
                         </div>
                     <?php
                     } 
@@ -391,8 +390,10 @@ if(isset($_POST['submit']))
     <section id="contact_us" class="contact-us-single container">
         <div class="row no-margin">
             <div class="col-sm-12 cop-ck px-0">
-                <form method="post">
+                <div class="inner-title mb-0">
                     <h2>Contact Form</h2>
+                </div>
+                <form method="post">
                     <div class="row cf-ro">
                         <div class="col-sm-3"><label>Enter Name :</label></div>
                         <div class="col-sm-8"><input type="text" placeholder="Enter Name" name="fullname"
