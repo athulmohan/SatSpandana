@@ -34,7 +34,7 @@ while($package=mysqli_fetch_assoc($packageSql)) {
         <div class="package-bg-img <?php echo strtolower($package['specialization']); ?>-bg-img-<?php echo $ind; ?>">
             <div class="container">
                 <div class="content-bg-layer">
-                    <div id="therapy" class="therapy mt-5">
+                    <div id="therapy" class="therapy py-5">
                         <hr>
                         </hr>
                         <div class="text">* <?php echo $package['treatmentName']; ?></div>

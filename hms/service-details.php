@@ -14,7 +14,7 @@
                 <div class="package-bg-img <?php echo strtolower($service['specilization']); ?>-bg-img-<?php echo $i; ?>">
                     <div class="container">
                         <div class="row content-bg-layer">
-                            <div id="<?php echo strtolower($service['specilization']); ?>-service" class="services mt-5">
+                            <div id="<?php echo strtolower($service['specilization']); ?>-service" class="services py-5">
                                 <p><?php echo $service['programs']; ?></p>
                             </div>
                         </div>
