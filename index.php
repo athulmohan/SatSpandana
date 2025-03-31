@@ -99,6 +99,9 @@ if(isset($_POST['submit']))
 
     <div class="slider-detail">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <div class="d-none d-md-block carousel-marker">
+                "HEALTH AND WELLNESS"
+            </div>
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
@@ -108,46 +111,38 @@ if(isset($_POST['submit']))
 
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="d-block w-100" src="assets/images/slider/slider_1.jpg" alt="First slide">
-                    <div class="carousel-cover"></div>
+                    <img class="d-none d-md-block w-100" src="assets/images/slider/slider_1.jpg" alt="First slide">
+                    <img class="d-md-none d-block w-100" src="assets/images/slider/small-screen/slider_1.jpg" alt="First slide">
+                    <!-- <div class="carousel-cover"></div> -->
                     <div class="carousel-caption vdg-cur d-none d-md-block service-list">
-                        <span class="animated bounceInDown text-uppercase service-item">WELLNESS</span>
-                        <span class="animated bounceInDown text-uppercase service-item">PHYSIOTHERAPY</span>
-                        <span class="animated bounceInDown text-uppercase service-item">YOGA</span>
-                        <span class="animated bounceInDown text-uppercase service-item">AYURVEDA</span>
+                        <?php include('hms/include/banner-text.php'); ?>
                     </div>
                 </div>
 
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="assets/images/slider/slider_2.jpg" alt="Second slide">
-                    <div class="carousel-cover"></div>
+                    <img class="d-none d-md-block w-100" src="assets/images/slider/slider_2.jpg" alt="Second slide">
+                    <img class="d-md-none d-block w-100" src="assets/images/slider/small-screen/slider_2.jpg" alt="Second slide">
+                    <!-- <div class="carousel-cover"></div> -->
                     <div class="carousel-caption vdg-cur d-none d-md-block service-list">
-                        <span class="animated bounceInDown text-uppercase service-item">WELLNESS</span>
-                        <span class="animated bounceInDown text-uppercase service-item">PHYSIOTHERAPY</span>
-                        <span class="animated bounceInDown text-uppercase service-item">YOGA</span>
-                        <span class="animated bounceInDown text-uppercase service-item">AYURVEDA</span>
+                        <?php include('hms/include/banner-text.php'); ?>
                     </div>
                 </div>
 
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="assets/images/slider/slider_3.jpg" alt="Third slide">
-                    <div class="carousel-cover"></div>
+                    <img class="d-none d-md-block w-100" src="assets/images/slider/slider_3.jpg" alt="Third slide">
+                    <img class="d-md-none d-block w-100" src="assets/images/slider/small-screen/slider_3.jpg" alt="Third slide">
+                    <!-- <div class="carousel-cover"></div> -->
                     <div class="carousel-caption vdg-cur d-none d-md-block service-list">
-                        <span class="animated bounceInDown text-uppercase service-item">WELLNESS</span>
-                        <span class="animated bounceInDown text-uppercase service-item">PHYSIOTHERAPY</span>
-                        <span class="animated bounceInDown text-uppercase service-item">YOGA</span>
-                        <span class="animated bounceInDown text-uppercase service-item">AYURVEDA</span>
+                        <?php include('hms/include/banner-text.php'); ?>
                     </div>
                 </div>
 
                 <div class="carousel-item">
-                    <img class="d-block w-100" src="assets/images/slider/slider_4.jpg" alt="Third slide">
-                    <div class="carousel-cover"></div>
+                    <img class="d-none d-md-block w-100" src="assets/images/slider/slider_4.jpg" alt="Fourth slide">
+                    <img class="d-md-none d-block w-100" src="assets/images/slider/small-screen/slider_4.jpg" alt="Fourth slide">
+                    <!-- <div class="carousel-cover"></div> -->
                     <div class="carousel-caption vdg-cur d-none d-md-block service-list">
-                        <span class="animated bounceInDown text-uppercase service-item">WELLNESS</span>
-                        <span class="animated bounceInDown text-uppercase service-item">PHYSIOTHERAPY</span>
-                        <span class="animated bounceInDown text-uppercase service-item">YOGA</span>
-                        <span class="animated bounceInDown text-uppercase service-item">AYURVEDA</span>
+                        <?php include('hms/include/banner-text.php'); ?>
                     </div>
                 </div>
             </div>
@@ -223,9 +218,8 @@ if(isset($_POST['submit']))
     <section id="services" class="key-features department">
         <div class="container-fluid">
             <div class="inner-title">
-
-                <h2>Our Key Features</h2>
-                <p>Take a look at some of our key features</p>
+                <h2>Our Services</h2>
+                <p>Our Expertise at a Glance</p>
             </div>
 
             <div class="row">
@@ -320,10 +314,12 @@ if(isset($_POST['submit']))
     <section id="about_us" class="about-us">
         <div class="row no-margin">
             <div class="col-sm-6"> <!-- image-bg no-padding -->
-                <img src="assets/images/aboutUs-03.jpg" class="img-responsive">
+                <img src="assets/images/teams/3.jpeg" class="img-responsive">
             </div>
             <div class="col-sm-6 abut-yoiu">
-                <h3>About Us</h3>
+                <div class="inner-title mb-0">
+                    <h2>About Us</h2>
+                </div>
                 <?php
                     $ret=mysqli_query($con,"select * from tblpage where PageType='aboutus' ");
                     while ($row=mysqli_fetch_array($ret)) {
