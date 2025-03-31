@@ -251,7 +251,7 @@ if(isset($_POST['submit']))
                     </div>
                 </a>
 
-                <a href="hms/packages.php?param=<?php echo bin2hex('corporate-wellness'); ?>" class="img-container col-lg-4 col-md-6">
+                <a href="hms/packages.php?param=<?php echo bin2hex('Corporate Wellness'); ?>" class="img-container col-lg-4 col-md-6">
                     <img src="assets/images/features/corporate-wellness.jpeg" alt="Corporate Wellness" class="image" style="width:100%">
                     <div class="middle">
                         <div class="text">Corporate Wellness</div>
