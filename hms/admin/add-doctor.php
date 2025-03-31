@@ -11,7 +11,7 @@ if(isset($_POST['submit']))
     $docspecialization=$_POST['Doctorspecialization'];
 	$docrole = $_POST['docrole'];
 	$docname=$_POST['docname'];
-	$docaddress=$_POST['clinicaddress'];
+	$docaddress=$_POST['clinicaddressid'];
 	$docfees=$_POST['docfees'];
 	$doccontactno=$_POST['doccontact'];
 	$docemail=$_POST['docemail'];
@@ -212,8 +212,21 @@ if(isset($_POST['submit']))
                                                         <label for="address">
                                                             Doctor Clinic Address
                                                         </label>
-                                                        <textarea name="clinicaddress" class="form-control"
-                                                            placeholder="Enter Doctor Clinic Address"></textarea>
+                                                        <!-- <textarea name="clinicaddress" class="form-control"
+                                                            placeholder="Enter Doctor Clinic Address"></textarea> -->
+                                                        <select name="clinicaddressid" class="form-control"
+                                                            required="true">
+                                                            <option value="">Select Address</option>
+                                                            <?php $ret=mysqli_query($con,"select * from locations where status = 1");
+															while($row=mysqli_fetch_array($ret))
+															{
+															?>
+                                                            <option
+                                                                value="<?php echo htmlentities($row['id']);?>">
+                                                                <?php echo htmlentities($row['location_name']);?>
+                                                            </option>
+                                                            <?php } ?>
+                                                        </select>
                                                     </div>
 
                                                     <div class="form-group">

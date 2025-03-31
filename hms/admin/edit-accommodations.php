@@ -17,7 +17,7 @@ if(isset($_POST['submit']))
     $errorCount = 0;
     $serilalizedImageList = [];
 
-    if (isset($_FILES['files']['name'])) {
+    if (isset($_FILES['files']['name']) && count($_FILES['files']['name']) > 0) {
 
         for ($i = 0; $i < count($_FILES['files']['name']); $i++) {
             $fileName = $_FILES['files']['name'][$i];
@@ -56,8 +56,11 @@ if(isset($_POST['submit']))
                 $errorCount++;
             }
         }
+        $serializedData = str_replace('"', "'", json_encode($serilalizedImageList));
+    } else {
+        $serializedData = $_POST['oldImages'];
     }
-    $serializedData = str_replace('"', "'", json_encode($serilalizedImageList));
+    
     $sql=mysqli_query($con,
         'UPDATE `accommodations` SET `name`="'.$name.'",`caption`="'.$caption.'",`feature`="'.$feature.'",`description`="'.$description.'", `images`="'.$serializedData.'" WHERE `id`="'.$id.'"'
     );
@@ -195,8 +198,10 @@ if(isset($_POST['submit']))
                                                                 </label>
                                                                 <input type="file" name="files[]" class="form-control"
                                                                     placeholder="Upload Profile Pic" accept="image/*" multiple>
+                                                                <input type="hidden" name="oldImages" value="<?php echo htmlentities($data['images']);?>">
                                                             </div>
-                                                            <?php if(isset($unSerilazedImages) && $unSerilazedImages !== "") { ?>
+                                                            <?php
+                                                            if(isset($unSerilazedImages) && sizeof($unSerilazedImages) > 0) { ?>
                                                                 <div class="form-group">
                                                                     <button class="btn btn-primary w-100 text-start" type="button" data-toggle="collapse" data-target="#toggleItem1" aria-expanded="false" aria-controls="toggleItem1">
                                                                             View Uploaded Images

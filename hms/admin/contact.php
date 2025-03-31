@@ -30,7 +30,7 @@ $email=$_POST['email'];
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Admin | Cotnact Us </title>
+		<title>Admin | Contact Us </title>
 		
 		<link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
@@ -63,14 +63,14 @@ $email=$_POST['email'];
 						<section id="page-title">
 							<div class="row">
 								<div class="col-sm-8">
-									<h1 class="mainTitle">Admin  | Update the Cotnact us Content</h1>
+									<h1 class="mainTitle">Admin  | Update the Contact us Content</h1>
 																	</div>
 								<ol class="breadcrumb">
 									<li>
 										<span>Admin </span>
 									</li>
 									<li class="active">
-										<span>Update the Cotnact us Content</span>
+										<span>Update the Contact us Content</span>
 									</li>
 								</ol>
 							</div>
@@ -106,7 +106,7 @@ while ($row=mysqli_fetch_array($ret)) {
                     </div>
                     <div class="form-group">
                       <label for="exampleInputUsername1">Mobile Number</label>
-                     <input type="text" class="form-control" name="mobnum" value="<?php  echo $row['MobileNumber'];?>" required='true' maxlength="10" pattern='[0-9]+'>
+                     <input type="text" class="form-control" name="mobnum" value="<?php  echo $row['MobileNumber'];?>" required='true' maxlength="13" pattern='^(\+91|\+91\-|0)?[789]\d{9}$'>
                     </div>
                     
                     <?php } ?>

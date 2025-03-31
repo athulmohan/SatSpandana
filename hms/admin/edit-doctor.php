@@ -12,13 +12,13 @@ if(isset($_POST['submit']))
 	$docspecialization=$_POST['Doctorspecialization'];
 	$docrole=$_POST['docrole'];
 	$docname=$_POST['docname'];
-	$docaddress=$_POST['clinicaddress'];
+	$docaddress=$_POST['clinicaddressid'];
 	$docfees=$_POST['docfees'];
 	$doccontactno=$_POST['doccontact'];
 	$docemail=$_POST['docemail'];
 	$aboutDoc=$_POST['about_doctor'];
 
-	if (isset($_FILES['file'])) {
+	if (isset($_FILES['file']) && $_FILES['file']['name'] !== '') {
 		$uploadDir = '../../assets/images/teams/doctors/'; // Directory to save the file
 	
 		// Ensure the upload directory exists
@@ -60,6 +60,7 @@ if(isset($_POST['submit']))
 			echo "File upload failed.";
 		}
 	} else {
+		$filename = $_POST['oldfile'];
 		echo "No file was uploaded.";
 	}
 	$sql=mysqli_query($con,"Update doctors set specilization='$docspecialization',role='$docrole',doctorName='$docname',address='$docaddress',docFees='$docfees',contactno='$doccontactno',docEmail='$docemail',profile_pic='$filename',about_doctor='$aboutDoc' where id='$did'");
@@ -195,8 +196,21 @@ if(isset($_POST['submit']))
 															<label for="address">
 																Doctor Clinic Address
 															</label>
-															<textarea name="clinicaddress"
-																class="form-control"><?php echo htmlentities($data['address']);?></textarea>
+															<!-- <textarea name="clinicaddress"
+																class="form-control"><?php //echo htmlentities($data['address']);?></textarea> -->
+																<select name="clinicaddressid" class="form-control"
+                                                            required="true">
+                                                            <option value="">Select Address</option>
+																<?php $ret=mysqli_query($con,"select * from locations where status = 1");
+																while($row=mysqli_fetch_array($ret))
+																{
+																?>
+																<option
+																	value="<?php echo htmlentities($row['id']);?>" <?php echo ($row['id'] === $data['address']) ? 'selected="selected"' : ''; ?>>
+																	<?php echo htmlentities($row['location_name']);?>
+																</option>
+																<?php } ?>
+															</select>
 														</div>
 														<div class="form-group">
 															<label for="fees">
@@ -229,6 +243,7 @@ if(isset($_POST['submit']))
 																Profile Pic
 															</label>
 															<input type="file" name="file" id="file" class="form-control" placeholder="Upload Profile Pic">
+															<input type="hidden" name="oldfile" value="<?php echo htmlentities($data['profile_pic']);?>">
 															<?php if(isset($data['profile_pic']) && $data['profile_pic'] !== "") { ?>
 																<a class="uploadedPic" href="<?php echo '../../assets/images/teams/doctors/'.$data['profile_pic']; ?>" target="_blank">VIEW UPLOADED PIC</a>
 															<?php } ?>
