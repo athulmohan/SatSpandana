@@ -96,7 +96,7 @@ if(isset($_POST['submit']))
     </script>
 </head>
 
-<body>
+<body class="login">
     <header id="menu-jk" style="display:none;">
         <div id="nav-head" class="header-nav">
             <div class="container">

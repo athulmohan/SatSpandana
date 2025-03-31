@@ -604,13 +604,14 @@ header {
   
   .middle {
     transition: .5s ease;
-    opacity: 0;
+    opacity: 0.5;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     text-align: center;
+    background: #ffffff;
   }
   
   .img-container:hover .image {
@@ -620,6 +621,7 @@ header {
   
   .img-container:hover .middle {
     opacity: 1;
+    background: unset;
   }
   
   .text {
@@ -630,6 +632,13 @@ header {
     font-weight: bold;
     font-family: cursive;
   }
+
+  @media only screen and (max-width: 769px){
+    .text {
+      font-size: unset;
+    }
+  }
+
   .img-container:hover .image {
     opacity: 0.3;
     background-color: #000000 !important;
@@ -1156,4 +1165,15 @@ header {
 
 .modal-dialog {
   max-width: 750px;
+}
+
+.carousel-marker {
+  position: absolute;
+  z-index: 999;
+  color: #ffffff;
+  font-size: x-large;
+  bottom: 50px;
+  left: 75px;
+  padding: 5px;
+  background: rgba(0, 0, 0, .6);
 }
