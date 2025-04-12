@@ -97,56 +97,9 @@ if(isset($_POST['submit']))
 </head>
 
 <body class="login">
-    <header id="menu-jk" style="display:none;">
-        <div id="nav-head" class="header-nav">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-2 col-md-3 col-sm-12">
-                        <a href="javascript:void(0);">
-                            <img src="../assets/images/satspandana-logo-png.png" alt="SAT SPANDANA">
-                        </a>
-                    </div>
-                    <div id="menu" class="col-lg-8 col-md-9 d-none d-md-block nav-item">
-                        <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#services">Services</a></li>
-                            <li><a href="#about_us">About Us</a></li>
-                            <li><a href="#gallery">Gallery</a></li>
-                            <li><a href="#contact_us">Contact Us</a></li>
-                            <li class="nav-item dropdown">
-                                <a class="dropdown-toggle" href="#" id="navbarDropdown2" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Logins
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                    <a class="dropdown-item" href="hms/user-login.php">Patient Login</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="hms/doctor">Doctors Login</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="hms/admin">Admin Login</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="dropdown-toggle" href="#" id="navbarDropdown3" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    More
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                                    <a class="dropdown-item" href="hms/our-teams.php">Our Team</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="hms/accommodation.php">Our Home Stay</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-2 d-none d-lg-block appoint">
-                        <a class="btn btn-success" href="hms/guest-book-appointment.php">Book an Appointment</a>
-                    </div>
-                </div>
+    <!-- ################# Header Starts Here#######################---> 
+    <?php include_once('hms/include/website-header.php') ?>
 
-            </div>
-        </div>
-    </header>
     <div id="app">
         <?php include_once('include/notification.php'); ?>
         <?php //include('include/sidebar.php');?>

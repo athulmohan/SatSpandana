@@ -19,57 +19,7 @@
 
 <body>
     <!-- ################# Header Starts Here#######################--->
-    <header id="menu-jk">
-        <div id="nav-head" class="header-nav">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-2 col-md-3 col-sm-12">
-                        <a href="javascript:void(0);">
-                            <img src="../assets/images/satspandana-logo-png.png" alt="SAT SPANDANA">
-                        </a>
-                    </div>
-                    <div id="menu" class="col-lg-8 col-md-9 d-none d-md-block nav-item">
-                        <ul>
-                            <li><a href="../index.php">Home</a></li>
-                            <li><a href="../index.php#services">Services</a></li>
-                            <li><a href="../index.php#about_us">About Us</a></li>
-                            <li><a href="../index.php#gallery">Gallery</a></li>
-                            <li><a href="../index.php#contact_us">Contact Us</a></li>
-                            <!-- <li><a href="#">Packages</a></li> -->
-                            <li class="nav-item dropdown">
-                                <a class="dropdown-toggle" href="#" id="navbarDropdown2" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Logins
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
-                                    <a class="dropdown-item" href="user-login.php">Patient Login</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="doctor">Doctors Login</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="admin">Admin Login</a>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="dropdown-toggle" href="#" id="navbarDropdown3" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    More
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
-                                    <a class="dropdown-item" href="our-teams.php">Our Team</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="accommodation.php">Our Home Stay</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-sm-2 d-none d-lg-block appoint">
-                        <a class="btn btn-success" href="guest-book-appointment.php">Book an Appointment</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </header>
+    <?php include_once('include/website-header.php') ?>
 
     <div id="our-teams" class="container my-5">
         <div class="inner-title mb-0">
