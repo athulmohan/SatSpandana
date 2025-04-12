@@ -2,10 +2,12 @@
     <?php 
         $logoSubPath = '';
         $linkSubPath = 'hms/';
+        $headerLinks = '';
         $a = str_contains($_SERVER['REQUEST_URI'], 'hms') ? true : false;
         if($a) {
             $logoSubPath = '../';
             $linkSubPath = '';
+            $headerLinks = '../index.php';
         }
     ?>
     <header id="menu-jk">
@@ -24,11 +26,11 @@
                     </div>
                     <div id="menu" class="col-lg-8 col-md-9 d-none d-md-block nav-item">
                         <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#services">Services</a></li>
-                            <li><a href="#about_us">About Us</a></li>
-                            <li><a href="#gallery">Gallery</a></li>
-                            <li><a href="#contact_us">Contact Us</a></li>
+                            <li><a href="<?php echo $headerLinks; ?>#">Home</a></li>
+                            <li><a href="<?php echo $headerLinks; ?>#services">Services</a></li>
+                            <li><a href="<?php echo $headerLinks; ?>#about_us">About Us</a></li>
+                            <li><a href="<?php echo $headerLinks; ?>#gallery">Gallery</a></li>
+                            <li><a href="<?php echo $headerLinks; ?>#contact_us">Contact Us</a></li>
                             <!-- <li><a href="#">Packages</a></li> -->
                             <!-- <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
