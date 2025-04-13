@@ -11,13 +11,14 @@
 	{
 		$specilization=$_POST['Doctorspecialization'];
 		$doctorid=$_POST['doctor'];
+        $locationid=$_POST['location'];
 		$userid=$_SESSION['id'];
 		$fees=$_POST['fees'];
 		$appdate=$_POST['appdate'];
 		$time=$_POST['apptime'];
 		$userstatus=1;
 		$docstatus=1;
-		$query=mysqli_query($con,"insert into appointment(doctorSpecialization,doctorId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$specilization','$doctorid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
+		$query=mysqli_query($con,"insert into appointment(doctorSpecialization,doctorId,locationId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$specilization','$doctorid','$locationid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
 		if($query)
 		{
 			$message = 'Your appointment successfully booked';
@@ -75,10 +76,6 @@
         });
     }
     </script>
-
-
-
-
 </head>
 
 <body>
@@ -124,8 +121,6 @@
                                                     <?php echo htmlentities($_SESSION['msg1']="");?></p>
                                                 <form role="form" name="book" method="post">
 
-
-
                                                     <div class="form-group">
                                                         <label for="DoctorSpecialization">
                                                             Doctor Specialization
@@ -146,9 +141,6 @@ while($row=mysqli_fetch_array($ret))
                                                         </select>
                                                     </div>
 
-
-
-
                                                     <div class="form-group">
                                                         <label for="doctor">
                                                             Doctors
@@ -159,16 +151,32 @@ while($row=mysqli_fetch_array($ret))
                                                         </select>
                                                     </div>
 
-
-
-
-
                                                     <div class="form-group">
                                                         <label for="consultancyfees">
                                                             Consultancy Fees
                                                         </label>
                                                         <select name="fees" class="form-control" id="fees" readonly>
 
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label for="location">
+                                                            Location
+                                                        </label>
+                                                        <select name="location" id="location" class="form-control" required="true">
+                                                            <option value="">Select Location</option>
+                                                            <?php
+                                                            $resLoc=mysqli_query($con,"select * from locations where status = 1");
+                                                            while($row=mysqli_fetch_array($resLoc))
+                                                            {
+                                                            ?>
+                                                            <option
+                                                                value="<?php echo htmlentities($row['id']);?>">
+                                                                <?php echo htmlentities($row['location_name']);?>
+                                                            </option>
+                                                            <?php } ?>
                                                         </select>
                                                     </div>
 
@@ -255,9 +263,10 @@ while($row=mysqli_fetch_array($ret))
     function getAvailableSlots(selectedDate) {
         // Fetch available slots when a date is selected
         var selectedDoc = $("#doctor").val();
+		var selectedLoc = $("#location").val();
         $('#apptime').html('<option value="">Loading...</option>');
 
-        $.get('include/book_slot.php', { date: selectedDate, doc: selectedDoc }, function (data) {
+        $.get('include/book_slot.php', { date: selectedDate, doc: selectedDoc, loc: selectedLoc }, function (data) {
             $('#apptime').html('<option value="">Select a Slot</option>');
             var slots = JSON.parse(data);
             

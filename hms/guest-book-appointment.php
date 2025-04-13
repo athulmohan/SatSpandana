@@ -21,6 +21,7 @@ if(isset($_POST['submit']))
     {
         $specilization=$_POST['Doctorspecialization'];
         $doctorid=$_POST['doctor'];
+        $locationid=$_POST['location'];
         $userid=mysqli_insert_id($con);
         $fees=$_POST['fees'];
         $appdate=$_POST['appdate'];
@@ -28,7 +29,7 @@ if(isset($_POST['submit']))
         $userstatus=1;
         $docstatus=1;
 
-        $query=mysqli_query($con,"insert into appointment(doctorSpecialization,doctorId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$specilization','$doctorid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
+        $query=mysqli_query($con,"insert into appointment(doctorSpecialization,doctorId,locationId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$specilization','$doctorid','$locationid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
         if($query > 0)
         {
 			$message = 'Your appointment successfully booked';
@@ -187,7 +188,7 @@ if(isset($_POST['submit']))
                                         Doctors
                                     </label>
                                     <select name="doctor" class="form-control" id="doctor"
-                                        onChange="getfee(this.value);" required="required">
+                                        onChange="getfee(this.value); getAvailableSlots(this.value);" required="required">
                                         <option value="">Select Doctor</option>
                                     </select>
                                 </div>
@@ -197,6 +198,25 @@ if(isset($_POST['submit']))
                                         Consultancy Fees
                                     </label>
                                     <select name="fees" class="form-control" id="fees" readonly></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="location">
+                                        Location
+                                    </label>
+                                    <select name="location" id="location" class="form-control" required="true" onChange="getAvailableSlots(this.value);">
+                                        <option value="">Select Location</option>
+                                        <?php
+                                        $resLoc=mysqli_query($con,"select * from locations where status = 1");
+                                        while($row=mysqli_fetch_array($resLoc))
+                                        {
+                                        ?>
+                                        <option
+                                            value="<?php echo htmlentities($row['id']);?>">
+                                            <?php echo htmlentities($row['location_name']);?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
@@ -271,19 +291,31 @@ if(isset($_POST['submit']))
 				function getAvailableSlots(selectedDate) {
 					// Fetch available slots when a date is selected
 					var selectedDoc = $("#doctor").val();
+					var selectedLoc = $("#location").val();
+					var selectedDate = $("#appdate").val();
+
 					$('#apptime').html('<option value="">Loading...</option>');
 
-					$.get('include/book_slot.php', { date: selectedDate, doc: selectedDoc }, function (data) {
-						$('#apptime').html('<option value="">Select a Slot</option>');
-						var slots = JSON.parse(data);
-						
-						if (slots.length > 0) {
-							slots.forEach(function (slot) {
-								$('#apptime').append('<option value="' + slot + '">' + slot + '</option>');
-							});
-						} else {
-							$('#apptime').html('<option value="">No Slots Available</option>');
-						}
+					$.get('include/book_slot.php', { date: selectedDate, doc: selectedDoc, loc: selectedLoc }, function (data) {
+                        
+                        // if(data.status == 'error') {
+                            // $('#apptime').html('<option value="">No Slots Available</option>');
+                            // $('#block-submit').attr('disabled', true);
+                            // $('#submission-error').html(data.message).show();
+                        // } else {
+                            $('#block-submit').attr('disabled', false);
+                            $('#submission-error').html(data.message).hide();
+                            $('#apptime').html('<option value="">Select a Slot</option>');
+                            var slots = JSON.parse(data);
+                            
+                            if (slots.length > 0) {
+                                slots.forEach(function (slot) {
+                                    $('#apptime').append('<option value="' + slot + '">' + slot + '</option>');
+                                });
+                            } else {
+                                $('#apptime').html('<option value="">No Slots Available</option>');
+                            }
+                        // }
 					});
 				}
             </script>
