@@ -8,6 +8,10 @@ if(strlen($_SESSION['id']==0)) {
     $msg = '';
     $errMsg = '';
 
+    // Get Doctor and Location data
+    $resDoc=mysqli_query($con,"select * from doctors");
+    $resLoc=mysqli_query($con,"select * from locations where status = 1");
+
     $limit = 15; // Number of records per page
     $page = isset($_GET['page']) ? $_GET['page'] : 1;
     $start = ($page - 1) * $limit;
@@ -34,12 +38,37 @@ if(strlen($_SESSION['id']==0)) {
 
     if(isset($_POST['submit']))
     {	
+        $no_of_days=(isset($_POST['no_of_days']) && $_POST['no_of_days'] !== '') ? $_POST['no_of_days'] : 0;  // use no_of_days to add slots for multiple days
         $appdate=$_POST['appdate'];
-        $apptime = $_POST['apptime'];
+        $isholiday = isset($_POST['isholiday']) ? $_POST['isholiday'] : 0;
+        $appfromtime = ($isholiday == 0) ? $_POST['appfromtime'] : 0;
+        $apptotime = ($isholiday == 0) ? $_POST['apptotime'] : 0;
+        $apptime = 0;
+        $time_interval=($isholiday == 0) ? $_POST['time_interval'] : 0;
+        $doctor_id = $_POST['doctor'];
+        $location_id = $_POST['location'];
 
-        $sql=mysqli_query($con,"insert into booking_slots(booking_date,slot_time) values('$appdate','$apptime')");
-        if($sql)
-        {
+// echo $no_of_days;die;
+        for ($i = 0; $i <= $no_of_days; $i++) {
+// echo $no_of_days;die;
+            $start_time = strtotime($appfromtime);
+            $end_time = strtotime($apptotime);
+
+            if($isholiday == 1) {
+                $sql=mysqli_query($con,"insert into booking_slots(doctor_id, location_id, booking_date, is_holiday, time_interval, slot_time) values('$doctor_id', '$location_id', '$appdate', '$isholiday', '$time_interval', '$apptime')");
+            } else {
+                while ($start_time < $end_time) {
+                    $apptime = date("h:i A", $start_time);
+                    $sql=mysqli_query($con,"insert into booking_slots(doctor_id, location_id, booking_date, is_holiday, time_interval, slot_time) values('$doctor_id', '$location_id', '$appdate', '$isholiday', '$time_interval', '$apptime')");
+            
+                    $start_time = strtotime($time_interval, $start_time);
+                }
+            }
+
+            $appdate = date('Y-m-d', strtotime($appdate . ' +1 day'));
+        }
+
+        if(isset($sql) && $sql) {
             $msg="Slot Addedd successfully";
             // echo "<script>
             // const myTimeout = setTimeout(reRoute, 2000);
@@ -47,6 +76,8 @@ if(strlen($_SESSION['id']==0)) {
             //     window.location.href ='manage-slots.php'
             // }
             // </script>";
+        } else {
+            $errMsg="Error adding slot.";
         }
     }
 ?>
@@ -134,11 +165,82 @@ if(strlen($_SESSION['id']==0)) {
                                         data-date-format="yyyy-mm-dd">
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="time">
-                                                            Time
+                                                        <label for="date">
+                                                           Days with same slots
                                                         </label>
-                                                        <input class="form-control" name="apptime" id="timepicker1" required="required">
+                                                        <input type="number" class="form-control" id="date" name="no_of_days" placeholder="Enter number of days">
                                                     </div>
+                                                    <div class="form-group">
+                                                        <label for="time">
+                                                            Is Holiday ?
+                                                        </label>
+                                                        <input type="checkbox" class="form-control checkbox-form-control" name="isholiday" id="isholiday" value="1">
+                                                    </div>
+                                                    <div id="timeSlotDiv">
+                                                        <div class="form-group">
+                                                            <label for="appfromtime">
+                                                                From Time
+                                                            </label>
+                                                            <input class="form-control" name="appfromtime" id="timepicker1" required="required">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="apptotime">
+                                                                To Time
+                                                            </label>
+                                                            <input class="form-control" name="apptotime" id="timepicker2" required="required">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="time_interval">
+                                                                Time Interval
+                                                            </label>
+                                                            <select name="time_interval" class="form-control" required="true">
+                                                                <!-- <option value="">Select Interval</option> -->
+                                                                <option value="+15 minutes">15 min</option>
+                                                                <option value="+30 minutes">30 min</option>
+                                                                <option value="+60 minutes">1 hour</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="doctors">
+                                                            Doctor
+                                                        </label>
+                                                        <select name="doctor" class="form-control" required="required">
+                                                            <option value="">Select Doctor</option>
+                                                            <?php
+                                                            while($row=mysqli_fetch_array($resDoc))
+                                                            {
+                                                            ?>
+                                                            <option
+                                                                value="<?php echo htmlentities($row['id']);?>">
+                                                                <?php echo htmlentities($row['doctorName']);?>
+                                                            </option>
+                                                            <?php } ?>
+
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="location">
+                                                            Location
+                                                        </label>
+                                                        <!-- <textarea name="clinicaddress" class="form-control"
+                                                            placeholder="Enter Doctor Clinic Address"></textarea> -->
+                                                        <select name="location" class="form-control" required="true">
+                                                            <option value="">Select Location</option>
+                                                            <?php
+															while($row=mysqli_fetch_array($resLoc))
+															{
+															?>
+                                                            <option
+                                                                value="<?php echo htmlentities($row['id']);?>">
+                                                                <?php echo htmlentities($row['location_name']);?>
+                                                            </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+
                                                     <div class="form-group">
                                                         <button type="submit" name="submit" id="submit"
                                                             class="btn btn-o btn-primary">
@@ -161,11 +263,44 @@ if(strlen($_SESSION['id']==0)) {
                                             <p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?>
                                                 <?php echo htmlentities($_SESSION['msg']="");?></p>
 
-                                            <!-- Search by Date -->
                                             <div class="mb-3">
-                                                <div class="col-md-3">
-                                                <input class="form-control datepicker" id="searchDate" name="searchDate" required="required"
-                                                data-date-format="yyyy-mm-dd">
+                                                <!-- Search by Date -->
+                                                <div class="col-md-2">
+                                                    <input class="form-control datepicker" id="searchDate" name="searchDate" required="required" 
+                                                    data-date-format="yyyy-mm-dd" placeholder="Search by Date">
+                                                </div>
+
+                                                <!-- Search by Doctor -->
+                                                <div class="col-md-2">
+                                                    <select name="searchDoctor" class="form-control" id="searchDoctor">
+                                                        <option value="">Select Doctor</option>
+                                                        <?php
+                                                        $resDoc=mysqli_query($con,"select * from doctors");
+                                                        while($row1=mysqli_fetch_array($resDoc))
+                                                        {
+                                                        ?>
+                                                        <option
+                                                            value="<?php echo htmlentities($row1['id']);?>">
+                                                            <?php echo htmlentities($row1['doctorName']);?>
+                                                        </option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <!-- Search by Location -->
+                                                <div class="col-md-2">
+                                                    <select name="searchLocation" class="form-control" id="searchLocation">
+                                                        <option value="">Select Location</option>
+                                                        <?php
+                                                        $resLoc=mysqli_query($con,"select * from locations where status = 1"); 
+                                                        while($row2=mysqli_fetch_array($resLoc))
+                                                        {
+                                                        ?>
+                                                        <option
+                                                            value="<?php echo htmlentities($row2['id']);?>">
+                                                            <?php echo htmlentities($row2['location_name']);?>
+                                                        </option>
+                                                        <?php } ?>
+                                                    </select>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <button class="btn btn-primary" onclick="searchSlots()">Search</button>
@@ -177,6 +312,8 @@ if(strlen($_SESSION['id']==0)) {
                                                     <tr>
                                                         <th class="center">#</th>
                                                         <th>Date</th>
+                                                        <th>Doctor</th>
+                                                        <th>Location</th>
                                                         <th>Time</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -189,7 +326,7 @@ if(strlen($_SESSION['id']==0)) {
                                                 <ul class="pagination justify-content-center" id="pagination">
                                                     <?php for ($i = 1; $i <= $totalPages; $i++) { ?>
                                                         <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
-                                                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                                                            <a class="page-link" onclick="loadSlots(<?php echo $i; ?>)"><?php echo $i; ?></a>
                                                         </li>
                                                     <?php } ?>
                                                 </ul>
@@ -245,6 +382,7 @@ if(strlen($_SESSION['id']==0)) {
             autoclose: true
         });
         $('#timepicker1').timepicker();
+        $('#timepicker2').timepicker();
     </script>
     <script>
         // Add Slot AJAX
@@ -269,7 +407,9 @@ if(strlen($_SESSION['id']==0)) {
         // Search by Date
         function searchSlots() {
             let selectedDate = $("#searchDate").val();
-            loadSlots(1, selectedDate);
+            let selectedDoctor = $("#searchDoctor").val();
+            let selectedLocation = $("#searchLocation").val();
+            loadSlots(1, selectedDate, selectedDoctor, selectedLocation);
         }
 
         // Initial Load
@@ -278,18 +418,41 @@ if(strlen($_SESSION['id']==0)) {
         });
 
         // Function to load slots with pagination
-        function loadSlots(page = 1, date = '') {
+        // function loadSlots(page = 1, date = '', doctor = '', location = '') {
+        //     // let date = $("#searchDate").val();
+        //     $.ajax({
+        //         url: "fetch_slots.php",
+        //         method: "GET",
+        //         data: { page: page, date: date, doctor: doctor, location: location },
+        //         success: function (response) {
+        //             let data = JSON.parse(response);
+        //             $("#slotsTable").html(data.table);
+        //             $("#pagination").html(data.pagination);
+        //         }
+        //     });
+        // }
+
+        function loadSlots(page = 1, date = '', doctor = '', location = '') {
             $.ajax({
                 url: "fetch_slots.php",
                 method: "GET",
-                data: { page: page, date: date },
+                data: { page: page, date: date, doctor: doctor, location: location },
                 success: function (response) {
+                    // Parse the JSON response
                     let data = JSON.parse(response);
                     $("#slotsTable").html(data.table);
                     $("#pagination").html(data.pagination);
                 }
             });
         }
+
+        $('#isholiday').click(function(){
+            if($(this).is(':checked')){
+                $('#timeSlotDiv').hide();
+            } else {
+                $('#timeSlotDiv').show();
+            }
+        });
     </script>
 
     </body>
