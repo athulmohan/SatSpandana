@@ -76,13 +76,16 @@
     <!-- ################# Packages Starts Here #######################--->
     <div id="packages" class="container-fluid py-5">
         <div class="inner-title mb-0">
-            <section class="stage">
-                <a href="packages.php?param=<?php echo bin2hex('all'); ?>" class="ball bubble" title="Click Me to view All Packages...">
-                    All
-                </a>
-            </section>
             <h2 class="left"><span>SERVICES</span></h2>
-            <h2 class="right"><span>Take a look at some</span></h2>
+            <h2 class="right">
+                <!-- <span>Take a look at some</span> -->
+
+                <section > <!--class="stage" -->
+                    <a href="packages.php?param=<?php echo bin2hex('all'); ?>" class="ball bubble" title="Click Me to view All Packages...">
+                        All
+                    </a>
+                </section>
+            </h2>
         </div>
         <?php
         if($packageParam === 'all' || $packageParam !== '') {
