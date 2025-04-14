@@ -195,7 +195,7 @@ if(isset($_POST['submit']))
 
                                 <div class="form-group">
                                     <label for="consultancyfees">
-                                        Consultancy Fees
+                                        Consultation Fees
                                     </label>
                                     <select name="fees" class="form-control" id="fees" readonly></select>
                                 </div>
@@ -232,7 +232,7 @@ if(isset($_POST['submit']))
                                         Time
                                     </label>
                                     <!-- <input class="form-control" name="apptime" id="timepicker1" required="required"> -->
-									<select id="apptime" name="apptime" class="form-control">
+									<select id="apptime" name="apptime" class="form-control" required="true">
 										<option value="">Select a Slot</option>
 									</select>
                                 </div>
