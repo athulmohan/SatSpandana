@@ -7,9 +7,33 @@ if(isset($_POST['submit']))
     $mobileno=$_POST['mobileno'];
     $dscrption=$_POST['description'];
     $query=mysqli_query($con,"insert into tblcontactus(fullname,email,contactno,message) value('$name','$email','$mobileno','$dscrption')");
-    echo "<script>alert('Your information succesfully submitted');</script>";
-    echo "<script>window.location.href ='index.php'</script>";
 
+    if($query) {
+        include ('hms/include/send-mail.php');
+
+        $from = 'satspandanawellness@gmail.com';
+        $subject = 'Welcome to SatSpandana Wellness';
+        $message = '<h1>Thank you for contacting us!</h1>';
+        $message .= '<p>We are happy to have you.Your information succesfully submitted. We will get touch with you shortly.</p>';
+        $message .= '<p><i>"' . $dscrption . '"</i></p>';
+
+        $submitMsg = "Your information successfully submitted.";
+
+        if(sendEmail($from, $email, $subject, $message)) {
+            $contactMsg = "Your information successfully submitted and email sent to you.";
+            echo "<script>console.log('Email Sent ...');</script>";
+        } else {
+            $contactMsg = "Your information successfully submitted but email not sent.";
+            echo "<script>console.log('Email Not Sent ...');</script>";
+        }
+
+		echo "<script>
+        // const myTimeout = setTimeout(reRoute, 2000);
+        // function reRoute() {
+        //     window.location.href ='index.php'
+        // }
+        </script>";
+    }
 } ?>
 <!doctype html>
 <html lang="en">
@@ -27,7 +51,13 @@ if(isset($_POST['submit']))
 </head>
 
 <body id="main-page">
-
+<?php if (isset($contactMsg) && !empty($contactMsg)): ?>
+    <div id="toast"><?php echo $contactMsg; ?></div>
+    <?php 
+        include ('hms/include/toast-script.php'); 
+    ?>
+<?php endif; ?>
+    <!-- <div id="loader" style="display: none;"></div> -->
     <!-- ################# Header Starts Here#######################--->
     <?php include_once('hms/include/website-header.php') ?>
 
