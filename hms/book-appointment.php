@@ -21,8 +21,30 @@
 		$query=mysqli_query($con,"insert into appointment(doctorSpecialization,doctorId,locationId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$specilization','$doctorid','$locationid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
 		if($query)
 		{
-			$message = 'Your appointment successfully booked';
-			$type = 'success';
+            $getUser=mysqli_query($con,"select * from users where id='$userid'");
+            $rowUser=mysqli_fetch_row($getUser);
+            include ('include/send-mail.php');
+
+            $from = 'satspandanawellness@gmail.com';
+            $email   = $rowUser['email']; // email from the users table
+            $subject = 'Welcome to SatSpandana Wellness';
+			$message = '<h1>Your appointment successfully booked</h1>';
+            $message .= '<p>Dear User,</p>';
+            $message .= '<p>Your appointment details are given below : </p>';
+            $message .= '<p>Category : ' .$specilization. '</p>';
+            $message .= '<p>Date : ' .$appdate. '</p>';
+            $message .= '<p>Time : ' .$time. '</p>';
+            
+            if(sendEmail($from, $email, $subject, $message)) {
+
+                $message = 'Your appointment successfully booked and email sent to your registered email address.';
+                $type = 'success';
+                echo "<script>console.log('Email Sent ...');</script>";
+            } else {
+                $message = 'Your appointment successfully booked but email sending failed.';
+                $type = 'success';
+                echo "<script>console.log('Email Sending Failed ...');</script>";
+            }
 			// echo "<script>alert('Your appointment successfully booked');</script>";
 		}
 
@@ -79,6 +101,13 @@
 </head>
 
 <body>
+
+<?php if (isset($message) && !empty($message)): ?>
+    <div id="toast"><?php echo $message; ?></div>
+    <?php 
+        include ('include/toast-script.php'); 
+    ?>
+<?php endif; ?>
     <div id="app">
         <?php include_once('include/notification.php'); ?>
         <?php include('include/sidebar.php');?>
