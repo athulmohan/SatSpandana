@@ -196,14 +196,20 @@
                                 <span class="title">About Us </span>
                             </a>
                         </li>
-                        <li>
-                            <a href="contact.php">
-                                <span class="title">Contact Us </span>
-                            </a>
-                        </li>
+                        
                         <li>
                             <a href="manage-gallery.php">
                                 <span class="title">Gallery Upload </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="manage-testimonial.php">
+                                <span class="title">Manage Testimonial </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="contact.php">
+                                <span class="title">Contact Us </span>
                             </a>
                         </li>
                     </ul>

@@ -1,5 +1,68 @@
 <?php
 include_once('hms/include/config.php');
+
+// Submit testimonial
+if(isset($_POST['testimony_submit'])) {
+    $witnessName = $_POST['witness_name'];
+    $witnessDesignation = $_POST['witness_designation'];
+    $testimony = $_POST['testimony'];
+    $rating = $_POST['rating'];
+
+    
+	if (isset($_FILES['witness_image']['name']) && $_FILES['witness_image']['name'] != '') {
+		$uploadDir = "../../assets/images/testimony/"; // Directory to save the file
+	
+		// Ensure the upload directory exists
+		if (!is_dir($uploadDir)) {
+			mkdir($uploadDir, 0777, true);
+		}
+	
+		// Check for errors
+		if ($_FILES['witness_image']['error'] !== UPLOAD_ERR_OK) {
+			// die("Error during file upload: " . $_FILES['witness_image']['error']);
+		}
+	
+		// Validate file type using MIME types
+		$allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+		$fileMimeType = mime_content_type($_FILES['witness_image']['tmp_name']);
+		if (!in_array($fileMimeType, $allowedMimeTypes)) {
+			// die("Invalid file type. Only JPG, PNG, GIF, and WEBP images are allowed.");
+		}
+	
+		// Validate file extension (optional, adds an extra layer of security)
+		$allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+		$fileExtension = strtolower(pathinfo($_FILES['witness_image']['name'], PATHINFO_EXTENSION));
+		if (!in_array($fileExtension, $allowedExtensions)) {
+			// die("Invalid file extension. Only JPG, PNG, GIF, and WEBP are allowed.");
+		}
+	
+		// Validate file size (optional, e.g., max 2MB)
+		$maxFileSize = 2 * 1024 * 1024; // 2MB
+		if ($_FILES['witness_image']['size'] > $maxFileSize) {
+			// die("File size exceeds the maximum allowed size of 2MB.");
+		}
+	
+		// Move the uploaded file to the target directory
+		$uploadFile = $uploadDir . basename($_FILES['witness_image']['name']);
+		$filename = basename($_FILES['witness_image']['name']);
+		if (move_uploaded_file($_FILES['witness_image']['tmp_name'], $uploadFile)) {
+			echo "File successfully uploaded to: " . htmlspecialchars($uploadFile);
+		} else {
+			echo "File upload failed.";
+		}
+	} else {
+		// echo "No file was uploaded.";
+        $filename = '';
+	}
+
+    $query=mysqli_query($con,"insert into testimony(image,witness_name,witness_designation,testimony,rating) value('$filename','$witnessName','$witnessDesignation','$testimony','$rating')");
+
+    if($query) {
+        $contactMsg = "Testmonial Updated Successfully.";
+    }
+}
+
+// Submit Queries
 if(isset($_POST['submit']))
 {
     $name=$_POST['fullname'];
@@ -48,15 +111,17 @@ if(isset($_POST['submit']))
     <link rel="stylesheet" href="assets/css/fontawsom-all.min.css">
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/testimony-style.css" />
 </head>
 
 <body id="main-page">
-<?php if (isset($contactMsg) && !empty($contactMsg)): ?>
-    <div id="toast"><?php echo $contactMsg; ?></div>
-    <?php 
-        include ('hms/include/toast-script.php'); 
-    ?>
-<?php endif; ?>
+
+    <?php if (isset($contactMsg) && !empty($contactMsg)): ?>
+        <div id="toast"><?php echo $contactMsg; ?></div>
+        <?php 
+            include ('hms/include/toast-script.php'); 
+        ?>
+    <?php endif; ?>
     <!-- <div id="loader" style="display: none;"></div> -->
     <!-- ################# Header Starts Here#######################--->
     <?php include_once('hms/include/website-header.php') ?>
@@ -346,8 +411,101 @@ if(isset($_POST['submit']))
     <!-- ######## Gallery End ####### -->
 
 
-    <!--  ************************* Contact Us Starts Here ************************** -->
+    <!--  ************************* Testimony Starts Here ************************** -->
+    <section id="testimony" class="mb-5 testimony container">
+        <div class="inner-title mb-0">
+            <h2>Testimony</h2>
+            <!-- <p>What Others Think About Us.</p> -->
+            <p>Voices of Our Valued Clients.</p>
+        </div>
+        
+        <?php 
+            $testimonySql=mysqli_query($con,"SELECT * from testimony where status=1"); 
+            $testimonyCount=mysqli_num_rows($testimonySql);
+        ?>
 
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <button class="btn btn-secondary addTestimony" data-toggle="modal" data-target="#addTestimonyModal">+ Add Testimony</button>
+            <div class="modal fade" id="addTestimonyModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addTestimony" aria-hidden="true">
+                <?php include_once('hms/include/add-testimony-modal.php'); ?>
+            </div>
+            <?php if($testimonyCount > 0) { ?>
+                <div id="testimonyCarousel">    
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <?php
+                        for($i = 1; $i <= $testimonyCount; $i++) {
+                        ?>
+                            <li data-target="#carousel-example-generic" data-slide-to="<?php echo $i; ?>" class="<?php echo ($i == 1) ? 'active' : '' ?>"></li>
+                            <!-- <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="3"></li> -->
+                        <?php } ?>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner testimony-carousel-inner" role="listbox">
+                        <?php 
+                            // $result = mysqli_fetch_assoc($testimonySql);
+                            // echo "<pre>"; print_r($result);
+                            // foreach ($result as $row) { 
+                            $j = 0;
+                            while($row=mysqli_fetch_array($testimonySql)) {
+                                $j++;
+                                $testimonyID = $row['id'];
+                                $witnessImage = (isset($row['image']) && $row['image']!=='') ? $row['image'] : 'default-pic.png';
+                                $witnessName = $row['witness_name'];
+                                $witnessDesignation = $row['witness_designation'];
+                                $testimony = $row['testimony'];
+                                $rating = $row['rating'];
+
+                                $testimonyImgPath = "assets/images/testimony/".$witnessImage;
+                            ?>
+
+                                <div class="carousel-item <?php echo ($j == 1) ? 'active' : '' ?>" id="item-<?php echo $testimonyID; ?>">
+                                    <!-- <button class="btn btn-light delete-button" onclick="deleteTestimony(<?php echo $testimonyID; ?>)">X</button> -->
+                                    <div class="imgBox animated bounceInRight" style="animation-delay: 1s">
+                                        <img src="<?php echo $testimonyImgPath; ?>" alt="<?php echo $witnessImage; ?>">
+                                    </div>
+                                    <div class="carousel-caption animated bounceInLeft"  style="animation-delay: 2s">
+                                        <input type="hidden" class="id" value="<?php echo $testimonyID; ?>" id="testimonyID-<?php echo $testimonyID; ?>" name="tbl_testimony_id">
+                                        <h4>Rating: <span id="stars-<?php echo $testimonyID; ?>"></span></h4>
+                                        <h3 class="testimony-alter-style"><?php echo $witnessName; ?></h3>
+                                        <h4><?php echo $witnessDesignation; ?></h4>
+                                        <p class="testimony-alter-style"><i>&#x275D <?php echo $testimony; ?> &#x275E</i></p>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    var rating = <?php echo $rating; ?>;
+                                    var starsContainer = document.getElementById('stars-<?php echo $testimonyID; ?>');
+                                    var stars = '';
+
+                                    for (var i = 0; i < rating; i++) {
+                                        stars += '&#9733;';
+                                    }
+                                    starsContainer.innerHTML = stars;
+                                </script>
+                                <?php 
+                            } 
+                        ?>
+                    </div>
+
+                    <!-- Controls -->
+                    <a class="carousel-control-prev left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            <?php } ?>
+        </div>
+    </section>
+    <!-- ######## Testimony End ####### -->
+
+    <!--  ************************* Contact Us Starts Here ************************** -->
     <section id="contact_us" class="contact-us-single container">
         <div class="row no-margin">
             <div class="col-sm-12 cop-ck px-0">
