@@ -606,7 +606,7 @@ if(isset($_POST['submit']))
     </footer>
     <div class="copy">
         <div class="container">
-            Sat Spandana
+            SatSpandana
         </div>
     </div>
 </body>
@@ -619,6 +619,7 @@ if(isset($_POST['submit']))
 <script src="assets/plugins/scroll-fixed/jquery-scrolltofixed-min.js"></script>
 
 <script src="assets/js/script.js"></script>
+<script src="assets/js/testimony-script.js"></script>
 
 <script>
     let currentIndex = 0;

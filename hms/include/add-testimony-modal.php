@@ -10,7 +10,7 @@
 
             <form role="form" name="addTestimony" method="post" enctype="multipart/form-data" onSubmit="return valid();">
                 <div class="form-group">
-                    <label for="witnessImage">Image</label>
+                    <label for="witnessImage">Profile Pic</label>
                     <input type="file" class="form-control-file" id="witnessImage" name="witness_image">
                 </div>
                 <div class="form-group">
@@ -22,8 +22,9 @@
                     <input type="text" class="form-control" id="witnessDesignation" name="witness_designation">
                 </div>
                 <div class="form-group">
-                    <label for="testimony">Testimonial</label>
-                    <textarea class="form-control" name="testimony" id="testimony" cols="10" rows="10"></textarea>
+                    <label for="testimony_textarea">Testimonial</label>
+                    <textarea class="form-control" name="testimony" id="testimony_textarea" cols="10" rows="10" placeholder="Type here... (max 20 words)"></textarea>
+                    <div id="wordCountMessage" style="color: red; margin-top: 5px;"></div>
                 </div>
                 <div class="form-group">
                     <label for="rating">Rating (1-5)</label>
