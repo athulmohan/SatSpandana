@@ -50,7 +50,7 @@ function sendEmail($from, $to, $subject, $body) {
             $mail->Host       = 'localhost';         // SMTP server
             $mail->SMTPAuth   = false;
             $mail->Username   = 'admin@satspandana.com';   // Your SMTP username
-            $mail->Password   = '';      // App password (not your Gmail password)
+            $mail->Password   = '*Mac*^=@Q+V?';      // App password (not your Gmail password)
             $mail->SMTPSecure = false;
             $mail->Port       = 25;
         }

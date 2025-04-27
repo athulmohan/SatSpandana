@@ -1,7 +1,7 @@
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title" id="addTestimony">Add Testimony</h5>
+            <h4 class="modal-title" id="addTestimony">Add Testimonials</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -22,7 +22,7 @@
                     <input type="text" class="form-control" id="witnessDesignation" name="witness_designation">
                 </div>
                 <div class="form-group">
-                    <label for="testimony">Testimony</label>
+                    <label for="testimony">Testimonial</label>
                     <textarea class="form-control" name="testimony" id="testimony" cols="10" rows="10"></textarea>
                 </div>
                 <div class="form-group">

@@ -433,6 +433,9 @@ if(strlen($_SESSION['id']==0)) {
         // }
 
         function loadSlots(page = 1, date = '', doctor = '', location = '') {
+            date = $("#searchDate").val();
+            doctor = $("#searchDoctor").val();
+            location = $("#searchLocation").val();
             $.ajax({
                 url: "fetch_slots.php",
                 method: "GET",

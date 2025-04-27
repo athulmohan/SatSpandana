@@ -8,9 +8,9 @@ if(isset($_POST['testimony_submit'])) {
     $testimony = $_POST['testimony'];
     $rating = $_POST['rating'];
 
-    
+    $errorFileUpload = '';
 	if (isset($_FILES['witness_image']['name']) && $_FILES['witness_image']['name'] != '') {
-		$uploadDir = "../../assets/images/testimony/"; // Directory to save the file
+		$uploadDir = "assets/images/testimony/"; // Directory to save the file
 	
 		// Ensure the upload directory exists
 		if (!is_dir($uploadDir)) {
@@ -34,31 +34,33 @@ if(isset($_POST['testimony_submit'])) {
 		$fileExtension = strtolower(pathinfo($_FILES['witness_image']['name'], PATHINFO_EXTENSION));
 		if (!in_array($fileExtension, $allowedExtensions)) {
 			// die("Invalid file extension. Only JPG, PNG, GIF, and WEBP are allowed.");
+            $errorFileUpload = "Invalid file extension. Only JPG, PNG, GIF, and WEBP are allowed."; 
 		}
 	
 		// Validate file size (optional, e.g., max 2MB)
 		$maxFileSize = 2 * 1024 * 1024; // 2MB
 		if ($_FILES['witness_image']['size'] > $maxFileSize) {
 			// die("File size exceeds the maximum allowed size of 2MB.");
+            $errorFileUpload = "File size exceeds the maximum allowed size of 2MB."; 
 		}
 	
 		// Move the uploaded file to the target directory
 		$uploadFile = $uploadDir . basename($_FILES['witness_image']['name']);
-		$filename = basename($_FILES['witness_image']['name']);
 		if (move_uploaded_file($_FILES['witness_image']['tmp_name'], $uploadFile)) {
-			echo "File successfully uploaded to: " . htmlspecialchars($uploadFile);
+            $filename = basename($_FILES['witness_image']['name']);
+			// echo "File successfully uploaded to: " . htmlspecialchars($uploadFile);
 		} else {
-			echo "File upload failed.";
+            $errorFileUpload = "File upload failed."; 
 		}
 	} else {
-		// echo "No file was uploaded.";
+        $errorFileUpload = "No file was uploaded."; 
         $filename = '';
 	}
 
     $query=mysqli_query($con,"insert into testimony(image,witness_name,witness_designation,testimony,rating) value('$filename','$witnessName','$witnessDesignation','$testimony','$rating')");
 
     if($query) {
-        $contactMsg = "Testmonial Updated Successfully.";
+        $contactMsg = "Testmonial Updated Successfully. ".$errorFileUpload;
     }
 }
 
@@ -414,18 +416,20 @@ if(isset($_POST['submit']))
     <!--  ************************* Testimony Starts Here ************************** -->
     <section id="testimony" class="mb-5 testimony container">
         <div class="inner-title mb-0">
-            <h2>Testimony</h2>
+            <h2>Testimonials</h2>
             <!-- <p>What Others Think About Us.</p> -->
-            <p>Voices of Our Valued Clients.</p>
+            <p>Words from Our Clients.</p>
         </div>
         
         <?php 
             $testimonySql=mysqli_query($con,"SELECT * from testimony where status=1"); 
             $testimonyCount=mysqli_num_rows($testimonySql);
+            $itemsPerSlide = 3;
+            $totalSlides = ceil($testimonyCount / $itemsPerSlide);
         ?>
 
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <button class="btn btn-secondary addTestimony" data-toggle="modal" data-target="#addTestimonyModal">+ Add Testimony</button>
+            <button class="btn btn-secondary addTestimony" data-toggle="modal" data-target="#addTestimonyModal">+ Add Testimonials</button>
             <div class="modal fade" id="addTestimonyModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addTestimony" aria-hidden="true">
                 <?php include_once('hms/include/add-testimony-modal.php'); ?>
             </div>
@@ -434,7 +438,7 @@ if(isset($_POST['submit']))
                     <!-- Indicators -->
                     <ol class="carousel-indicators">
                         <?php
-                        for($i = 1; $i <= $testimonyCount; $i++) {
+                        for($i = 1; $i <= $totalSlides; $i++) {
                         ?>
                             <li data-target="#carousel-example-generic" data-slide-to="<?php echo $i; ?>" class="<?php echo ($i == 1) ? 'active' : '' ?>"></li>
                             <!-- <li data-target="#carousel-example-generic" data-slide-to="2"></li>
@@ -443,12 +447,14 @@ if(isset($_POST['submit']))
                     </ol>
 
                     <!-- Wrapper for slides -->
-                    <div class="carousel-inner testimony-carousel-inner" role="listbox">
+                    <div class="col-md-12 carousel-inner testimony-carousel-inner" role="listbox">
                         <?php 
                             // $result = mysqli_fetch_assoc($testimonySql);
                             // echo "<pre>"; print_r($result);
                             // foreach ($result as $row) { 
                             $j = 0;
+                            $counter = 0;
+                            echo '<div class="carousel-item active"><div class="row">';
                             while($row=mysqli_fetch_array($testimonySql)) {
                                 $j++;
                                 $testimonyID = $row['id'];
@@ -459,21 +465,27 @@ if(isset($_POST['submit']))
                                 $rating = $row['rating'];
 
                                 $testimonyImgPath = "assets/images/testimony/".$witnessImage;
+
+                                if ($counter > 0 && $counter % 3 == 0) { // 3 items per slide
+                                    echo '</div></div><div class="carousel-item"><div class="row">';
+                                }
                             ?>
 
-                                <div class="carousel-item <?php echo ($j == 1) ? 'active' : '' ?>" id="item-<?php echo $testimonyID; ?>">
-                                    <!-- <button class="btn btn-light delete-button" onclick="deleteTestimony(<?php echo $testimonyID; ?>)">X</button> -->
-                                    <div class="imgBox animated bounceInRight" style="animation-delay: 1s">
-                                        <img src="<?php echo $testimonyImgPath; ?>" alt="<?php echo $witnessImage; ?>">
+                                <!-- <div class="col-md-4 carousel-item <?php //echo ($j == 1) ? 'active' : '' ?>" id="item-<?php //echo $testimonyID; ?>"> -->
+                                    <!-- <button class="btn btn-light delete-button" onclick="deleteTestimony(<?php //echo $testimonyID; ?>)">X</button> -->
+                                    <div class="col-md-4 carousel-tiles">
+                                        <div class="imgBox animated bounceInRight mb-3" style="animation-delay: 1s">
+                                            <img src="<?php echo $testimonyImgPath; ?>" alt="<?php echo $witnessImage; ?>">
+                                        </div>
+                                        <div class="carousel-caption animated bounceInLeft"  style="animation-delay: 2s">
+                                            <input type="hidden" class="id" value="<?php echo $testimonyID; ?>" id="testimonyID-<?php echo $testimonyID; ?>" name="tbl_testimony_id">
+                                            <h5 style="color: #555;">Rating: <span id="stars-<?php echo $testimonyID; ?>"></span></h5>
+                                            <h5 class="testimony-alter-style"><?php echo $witnessName; ?></h5>
+                                            <h5 style="color: #555;"><?php echo $witnessDesignation; ?></h5>
+                                            <p class="testimony-alter-style"><i>&#x275D <?php echo $testimony; ?> &#x275E</i></p>
+                                        </div>
                                     </div>
-                                    <div class="carousel-caption animated bounceInLeft"  style="animation-delay: 2s">
-                                        <input type="hidden" class="id" value="<?php echo $testimonyID; ?>" id="testimonyID-<?php echo $testimonyID; ?>" name="tbl_testimony_id">
-                                        <h4>Rating: <span id="stars-<?php echo $testimonyID; ?>"></span></h4>
-                                        <h3 class="testimony-alter-style"><?php echo $witnessName; ?></h3>
-                                        <h4><?php echo $witnessDesignation; ?></h4>
-                                        <p class="testimony-alter-style"><i>&#x275D <?php echo $testimony; ?> &#x275E</i></p>
-                                    </div>
-                                </div>
+                                <!-- </div> -->
 
                                 <script>
                                     var rating = <?php echo $rating; ?>;
@@ -486,7 +498,9 @@ if(isset($_POST['submit']))
                                     starsContainer.innerHTML = stars;
                                 </script>
                                 <?php 
+                                $counter++;
                             } 
+                        echo '</div></div>'; // Close last slide
                         ?>
                     </div>
 

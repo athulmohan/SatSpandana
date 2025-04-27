@@ -72,7 +72,7 @@
 }
 
 #testimony .carousel-caption p {
-    font-size: 18px;
+    font-size: 16px;
     margin: auto;
     width: 70%;
     margin-bottom: 10px;
@@ -139,9 +139,17 @@
     color: #ffffff !important;
 }
 
+#testimony .testimony-alter-style p {
+    font-size: 16px;
+}
+
 #testimony .addTestimony {
     float: right;
     border-radius: 15px;
     position: relative;
     z-index: 999;
+}
+
+.carousel-tiles {
+    float: left;
 }
