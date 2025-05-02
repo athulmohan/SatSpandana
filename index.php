@@ -76,7 +76,8 @@ if(isset($_POST['submit']))
     if($query) {
         include ('hms/include/send-mail.php');
 
-        $from = 'satspandanawellness@gmail.com';
+        // $from = 'satspandanawellness@gmail.com';
+        $from = 'admin@satspandana.com';
         $subject = 'Welcome to SatSpandana Wellness';
         $message = '<h1>Thank you for contacting us!</h1>';
         $message .= '<p>We are happy to have you.Your information succesfully submitted. We will get touch with you shortly.</p>';

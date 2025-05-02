@@ -54,7 +54,8 @@ if(strlen($_SESSION['id']==0)) {
     while ($row = $result->fetch_assoc()) {
         $confirmText = "Are you sure you want to delete?";
         $tableData .= "<a onclick='loadTime(".$row['booking_date'].", ".$row['doctor_id'].", ".$row['location_id'].")'>
-                        <tr>
+                        <tr id='slot_row_".$row['id']."'>
+                            <td class='center'><input type='checkbox' name='slot_multi_delete' id='delete_".$row['id']."' value='".$row['id']."' onclick='selectAll()'></td>
                             <td class='center'>".$cnt."</td>
                             <td>{$row['booking_date']}</td>
                             <td>{$row['doctorName']}</td>

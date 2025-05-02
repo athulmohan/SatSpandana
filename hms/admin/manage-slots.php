@@ -253,6 +253,8 @@ if(strlen($_SESSION['id']==0)) {
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12" id="delete_error" style="float: left;"></div>
+                            <div class="col-md-12" id="delete_success" style="float: left;"></div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="panel panel-white">
                                     <div class="row">
@@ -261,55 +263,62 @@ if(strlen($_SESSION['id']==0)) {
                                                     class="text-bold">Slots</span>
                                             </h5>
                                             <p style="color:red;"><?php echo htmlentities($_SESSION['msg']);?>
-                                                <?php echo htmlentities($_SESSION['msg']="");?></p>
+                                                <?php echo htmlentities($_SESSION['msg']="");?>
+                                            </p>
+                                            <div class="col-md-12 row">
+                                                <div class="col-md-10 mb-3">
+                                                    <!-- Search by Date -->
+                                                    <div class="col-md-3">
+                                                        <input class="form-control datepicker" id="searchDate" name="searchDate" required="required" 
+                                                        data-date-format="yyyy-mm-dd" placeholder="Search by Date">
+                                                    </div>
 
-                                            <div class="mb-3">
-                                                <!-- Search by Date -->
-                                                <div class="col-md-2">
-                                                    <input class="form-control datepicker" id="searchDate" name="searchDate" required="required" 
-                                                    data-date-format="yyyy-mm-dd" placeholder="Search by Date">
+                                                    <!-- Search by Doctor -->
+                                                    <div class="col-md-3">
+                                                        <select name="searchDoctor" class="form-control" id="searchDoctor">
+                                                            <option value="">Select Doctor</option>
+                                                            <?php
+                                                            $resDoc=mysqli_query($con,"select * from doctors");
+                                                            while($row1=mysqli_fetch_array($resDoc))
+                                                            {
+                                                            ?>
+                                                            <option
+                                                                value="<?php echo htmlentities($row1['id']);?>">
+                                                                <?php echo htmlentities($row1['doctorName']);?>
+                                                            </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <!-- Search by Location -->
+                                                    <div class="col-md-3">
+                                                        <select name="searchLocation" class="form-control" id="searchLocation">
+                                                            <option value="">Select Location</option>
+                                                            <?php
+                                                            $resLoc=mysqli_query($con,"select * from locations where status = 1"); 
+                                                            while($row2=mysqli_fetch_array($resLoc))
+                                                            {
+                                                            ?>
+                                                            <option
+                                                                value="<?php echo htmlentities($row2['id']);?>">
+                                                                <?php echo htmlentities($row2['location_name']);?>
+                                                            </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button class="btn btn-primary" onclick="searchSlots()">Search</button>
+                                                    </div>
                                                 </div>
 
-                                                <!-- Search by Doctor -->
-                                                <div class="col-md-2">
-                                                    <select name="searchDoctor" class="form-control" id="searchDoctor">
-                                                        <option value="">Select Doctor</option>
-                                                        <?php
-                                                        $resDoc=mysqli_query($con,"select * from doctors");
-                                                        while($row1=mysqli_fetch_array($resDoc))
-                                                        {
-                                                        ?>
-                                                        <option
-                                                            value="<?php echo htmlentities($row1['id']);?>">
-                                                            <?php echo htmlentities($row1['doctorName']);?>
-                                                        </option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                                <!-- Search by Location -->
-                                                <div class="col-md-2">
-                                                    <select name="searchLocation" class="form-control" id="searchLocation">
-                                                        <option value="">Select Location</option>
-                                                        <?php
-                                                        $resLoc=mysqli_query($con,"select * from locations where status = 1"); 
-                                                        while($row2=mysqli_fetch_array($resLoc))
-                                                        {
-                                                        ?>
-                                                        <option
-                                                            value="<?php echo htmlentities($row2['id']);?>">
-                                                            <?php echo htmlentities($row2['location_name']);?>
-                                                        </option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <button class="btn btn-primary" onclick="searchSlots()">Search</button>
+                                                <div class="col-md-2 mb-3">
+                                                    <button class="btn btn-danger d-none" id="deleteAllBtn" style="float: right; display: none;">Delete Selected</button>
+                                                    <input type="hidden" id="selected_slots" name="selected_slots" value="">
                                                 </div>
                                             </div>
-
                                             <table class="table table-hover" id="sample-table-1">
                                                 <thead>
                                                     <tr>
+                                                        <th class="center"><input type="checkbox" name="delete_all" id="delete_all" onclick="selectAll('All')"></th>
                                                         <th class="center">#</th>
                                                         <th>Date</th>
                                                         <th>Doctor</th>
@@ -394,15 +403,6 @@ if(strlen($_SESSION['id']==0)) {
             });
         });
 
-        // Delete Slot AJAX
-        $(".delete-btn").click(function () {
-            let slotId = $(this).data("id");
-
-            $.post("delete_slot.php", { id: slotId }, function (response) {
-                alert(response);
-                $("#row-" + slotId).fadeOut(); // Remove row from table
-            });
-        });
 
         // Search by Date
         function searchSlots() {
@@ -433,6 +433,10 @@ if(strlen($_SESSION['id']==0)) {
         // }
 
         function loadSlots(page = 1, date = '', doctor = '', location = '') {
+
+            var main_checkbox = document.getElementById('delete_all');
+            main_checkbox.checked = false; // Uncheck the main checkbox
+
             date = $("#searchDate").val();
             doctor = $("#searchDoctor").val();
             location = $("#searchLocation").val();
@@ -456,6 +460,89 @@ if(strlen($_SESSION['id']==0)) {
                 $('#timeSlotDiv').show();
             }
         });
+
+        function selectAll(param = '') {
+            var rowList = [];
+            var checkboxes = document.getElementsByName('slot_multi_delete');
+            var selectAllCheckbox = document.getElementsByName('delete_all')[0];
+            for (var i = 0; i < checkboxes.length; i++) {
+                if(param == 'All') {
+                    checkboxes[i].checked = selectAllCheckbox.checked;
+                }
+
+                if(checkboxes[i].checked) {
+                    rowList.push(checkboxes[i].value);
+                } else {
+                    rowList = rowList.filter(item => item !== checkboxes[i].value);
+                }
+            }
+            console.log('rowList', rowList);
+            $('#selected_slots').val(rowList.join(',')); // Store selected IDs in a hidden input field
+            if(rowList.length > 0) {
+                $('#deleteAllBtn').show();
+            } else {
+                $('#deleteAllBtn').hide();
+            }
+        }
+
+        // Delete Slot AJAX
+        $("#deleteAllBtn").click(function () {
+            // var delSuccessMsg = "";
+            // var delErrMsg = "";
+            let rowList = $("#selected_slots").val();
+            if(rowList.length > 0) {
+                $.ajax({
+                    url: "delete_slots.php",
+                    method: "POST",
+                    data: { id: rowList },
+					success: function (response) {
+                        // let data = JSON.parse(response);
+						response = response.trim();
+                        rowList = [];
+                        $('#deleteAllBtn').hide();
+                        if(response == "Success") {
+                            const delSuccessMsg = "<span style='color: green; font-size:18px;'>Slots deleted successfully!</span>";
+                            const delErrMsg = "";
+                            // const myTimeout = setTimeout(reRoute, 2000);
+                            // function reRoute() {
+                                loadSlots(); // Refresh the table after deletion
+                            // }
+                            $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
+                            $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
+                        } else {
+                            const delSuccessMsg = "";
+                            const delErrMsg = "<span style='color: red; font-size:18px;'>Error deleting slots.</span>";
+                            $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
+                            $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
+                        }
+                    },
+                    error: function () {
+                        const delSuccessMsg = "";
+                        const delErrMsg = "<span style='color: red; font-size:18px;'>Something went wrong while deleting.</span>";
+                        $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
+                        $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
+					}
+                });
+            } else {
+                const delSuccessMsg = "";
+                const delErrMsg = "<span style='color: red; font-size:18px;'>Please select at least one slot to delete.</span>";
+                $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
+                $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
+            }
+        });
+
+        // function multiSelect(id) {
+        //     var rowList = [];
+        //     var checkboxes = document.getElementsByName('slot_multi_delete');
+        //     for (var i = 0; i < checkboxes.length; i++) {
+        //         if(checkboxes[i].checked) {
+        //             rowList.push(checkboxes[i].value);
+        //         } else {
+        //             rowList = rowList.filter(item => item !== checkboxes[i].value);
+        //         }
+        //     }
+        //     console.log('rowList', rowList);
+        // }
     </script>
 
     </body>
