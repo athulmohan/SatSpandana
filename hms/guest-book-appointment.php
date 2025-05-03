@@ -38,12 +38,16 @@ if(isset($_POST['submit']))
             // $rowUser=mysqli_fetch_row($getUser);
             include ('include/send-mail.php');
 
-            $from = 'satspandanawellness@gmail.com';
+            // $from = 'satspandanawellness@gmail.com';
+            $from = 'admin@satspandana.com';
             $subject = 'Welcome to SatSpandana Wellness';
-			$message = '<h1>Your appointment successfully booked</h1>';
-            $message .= '<p>Dear User,</p>';
+			$message = '<h3>Your appointment successfully booked</h3>';
+            $message .= '<p>Dear ' .$fname. ',</p>';
             $message .= '<p>Your appointment details are given below : </p>';
             $message .= '<p>Category : ' .$specilization. '</p>';
+            $message .= '<p>Doctor Name : ' .$_POST['docName']. '</p>';
+            $message .= '<p>Location : ' .$_POST['locName']. '</p>';
+            $message .= '<p>Fee : ' .$fees. ' INR</p>';
             $message .= '<p>Date : ' .$appdate. '</p>';
             $message .= '<p>Time : ' .$time. '</p>';
             
@@ -51,11 +55,9 @@ if(isset($_POST['submit']))
 
                 $message = 'Your appointment successfully booked and email sent to your registered email address.';
                 $type = 'success';
-                echo "<script>console.log('Email Sent ...');</script>";
             } else {
                 $message = 'Your appointment successfully booked but email sending failed.';
                 $type = 'success';
-                echo "<script>console.log('Email Sending Failed ...');</script>";
             }
 
 
@@ -134,7 +136,7 @@ if(isset($_POST['submit']))
     <?php endif; ?>
 
     <!-- ################# Header Starts Here#######################---> 
-    <!-- <?php include_once('include/website-header.php') ?> -->
+    <?php //include_once('include/website-header.php') ?>
 
     <div id="app">
         <?php include_once('include/notification.php'); ?>
@@ -271,7 +273,8 @@ if(isset($_POST['submit']))
 										<option value="">Select a Slot</option>
 									</select>
                                 </div>
-
+                                <input type="hidden" id="docName" name="docName">
+                                <input type="hidden" name="locName" id="locName">
                                 <button type="submit" name="submit" class="btn btn-o btn-primary">
                                     Submit
                                 </button>
@@ -328,6 +331,12 @@ if(isset($_POST['submit']))
 					var selectedDoc = $("#doctor").val();
 					var selectedLoc = $("#location").val();
 					var selectedDate = $("#appdate").val();
+
+                    var docName = $("#doctor").find("option:selected").text();
+                    $("#docName").val(docName);
+
+                    var locName = $("#location").find("option:selected").text();
+                    $("#locName").val(locName);
 
 					$('#apptime').html('<option value="">Loading...</option>');
 

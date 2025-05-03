@@ -22,16 +22,21 @@
 		if($query)
 		{
             $getUser=mysqli_query($con,"select * from users where id='$userid'");
-            $rowUser=mysqli_fetch_row($getUser);
+            $rowUser=mysqli_fetch_assoc($getUser);
+
             include ('include/send-mail.php');
 
-            $from = 'satspandanawellness@gmail.com';
+            // $from = 'satspandanawellness@gmail.com';
+            $from = 'admin@satspandana.com';
             $email   = $rowUser['email']; // email from the users table
             $subject = 'Welcome to SatSpandana Wellness';
-			$message = '<h1>Your appointment successfully booked</h1>';
-            $message .= '<p>Dear User,</p>';
+			$message = '<h3>Your appointment successfully booked</h3>';
+            $message .= '<p>Dear '.$_SESSION['login'].',</p>';
             $message .= '<p>Your appointment details are given below : </p>';
             $message .= '<p>Category : ' .$specilization. '</p>';
+            $message .= '<p>Doctor Name : ' .$_POST['docName']. '</p>';
+            $message .= '<p>Location : ' .$_POST['locName']. '</p>';
+            $message .= '<p>Fee : ' .$fees. ' INR</p>';
             $message .= '<p>Date : ' .$appdate. '</p>';
             $message .= '<p>Time : ' .$time. '</p>';
             
@@ -39,11 +44,9 @@
 
                 $message = 'Your appointment successfully booked and email sent to your registered email address.';
                 $type = 'success';
-                echo "<script>console.log('Email Sent ...');</script>";
             } else {
                 $message = 'Your appointment successfully booked but email sending failed.';
                 $type = 'success';
-                echo "<script>console.log('Email Sending Failed ...');</script>";
             }
 			// echo "<script>alert('Your appointment successfully booked');</script>";
 		}
@@ -230,6 +233,9 @@ while($row=mysqli_fetch_array($ret))
                                                         </select>
                                                     </div>
 
+                                                    <input type="hidden" id="docName" name="docName">
+                                                    <input type="hidden" name="locName" id="locName">
+
                                                     <button type="submit" name="submit" class="btn btn-o btn-primary">
                                                         Submit
                                                     </button>
@@ -293,6 +299,13 @@ while($row=mysqli_fetch_array($ret))
         // Fetch available slots when a date is selected
         var selectedDoc = $("#doctor").val();
 		var selectedLoc = $("#location").val();
+
+        var docName = $("#doctor").find("option:selected").text();
+        $("#docName").val(docName);
+
+        var locName = $("#location").find("option:selected").text();
+        $("#locName").val(locName);
+
         $('#apptime').html('<option value="">Loading...</option>');
 
         $.get('include/book_slot.php', { date: selectedDate, doc: selectedDoc, loc: selectedLoc }, function (data) {
