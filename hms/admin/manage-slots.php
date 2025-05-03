@@ -491,38 +491,45 @@ if(strlen($_SESSION['id']==0)) {
             // var delErrMsg = "";
             let rowList = $("#selected_slots").val();
             if(rowList.length > 0) {
-                $.ajax({
-                    url: "delete_slots.php",
-                    method: "POST",
-                    data: { id: rowList },
-					success: function (response) {
-                        // let data = JSON.parse(response);
-						response = response.trim();
-                        rowList = [];
-                        $('#deleteAllBtn').hide();
-                        if(response == "Success") {
-                            const delSuccessMsg = "<span style='color: green; font-size:18px;'>Slots deleted successfully!</span>";
-                            const delErrMsg = "";
-                            // const myTimeout = setTimeout(reRoute, 2000);
-                            // function reRoute() {
-                                loadSlots(); // Refresh the table after deletion
-                            // }
-                            $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
-                            $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
-                        } else {
+                if (confirm("Are you sure want to delete the selected slots?")) {
+                    $.ajax({
+                        url: "delete_slots.php",
+                        method: "POST",
+                        data: { id: rowList },
+                        success: function (response) {
+                            // let data = JSON.parse(response);
+                            response = response.trim();
+                            rowList = [];
+                            $('#deleteAllBtn').hide();
+                            if(response == "Success") {
+                                const delSuccessMsg = "<span style='color: green; font-size:18px;'>Slots deleted successfully!</span>";
+                                const delErrMsg = "";
+                                // const myTimeout = setTimeout(reRoute, 2000);
+                                // function reRoute() {
+                                    loadSlots(); // Refresh the table after deletion
+                                // }
+                                $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
+                                $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
+                            } else {
+                                const delSuccessMsg = "";
+                                const delErrMsg = "<span style='color: red; font-size:18px;'>Error deleting slots.</span>";
+                                $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
+                                $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
+                            }
+                        },
+                        error: function () {
                             const delSuccessMsg = "";
-                            const delErrMsg = "<span style='color: red; font-size:18px;'>Error deleting slots.</span>";
+                            const delErrMsg = "<span style='color: red; font-size:18px;'>Something went wrong while deleting.</span>";
                             $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
                             $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
                         }
-                    },
-                    error: function () {
-                        const delSuccessMsg = "";
-                        const delErrMsg = "<span style='color: red; font-size:18px;'>Something went wrong while deleting.</span>";
-                        $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
-                        $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
-					}
-                });
+                    });
+                } else {
+                    const delSuccessMsg = "";
+                    const delErrMsg = "<span style='color: red; font-size:18px;'>Deletion cancelled.</span>";
+                    $("#delete_error").html(delErrMsg).fadeIn().delay(3000).fadeOut();
+                    $("#delete_success").html(delSuccessMsg).fadeIn().delay(3000).fadeOut();
+                }
             } else {
                 const delSuccessMsg = "";
                 const delErrMsg = "<span style='color: red; font-size:18px;'>Please select at least one slot to delete.</span>";

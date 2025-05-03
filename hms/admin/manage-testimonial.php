@@ -82,12 +82,13 @@ if(strlen($_SESSION['id']==0)) {
 												<td><?php echo $row['testimony'];?></td>
 												<td><?php echo $row['rating'];?></td>
 												<td>
-													<select name="status" id="status" class="form-control" onChange="changeStatus(this.value, '<?php echo $row['id']; ?>')">
+													<select name="status" id="status_<?php echo $row['id'] ?>" class="form-control" onChange="changeStatus(this.value, '<?php echo $row['id']; ?>')">
 														<option value="0" <?php if($row['status']==0) { echo 'selected'; } ?>>Pending</option>
 														<option value="1" <?php if($row['status']==1) { echo 'selected'; } ?>>Active</option>
 														<option value="2" <?php if($row['status']==2) { echo 'selected'; } ?>>Rejected</option>
 														<option value="3" <?php if($row['status']==3) { echo 'selected'; } ?>>Deleted</option>
 													</select>
+													<input type="hidden" id="previousStatus_<?php echo $row['id'] ?>" value="<?php echo $row['status']; ?>">
 												</td>
 											</tr>
 											
@@ -99,7 +100,6 @@ if(strlen($_SESSION['id']==0)) {
 								</div>
 							</div>
 						</div>
-						
 						<!-- end: BASIC EXAMPLE -->
 						<!-- end: SELECT BOXES -->
 						
@@ -144,7 +144,10 @@ if(strlen($_SESSION['id']==0)) {
 
 
 		function changeStatus(value, id) {
-			if (confirm("Are you sure you want to delete this testimonial?")) {
+			const previousValue = document.getElementById('previousStatus_' + id).value;
+			var confirmLabel = (value == 3) ? "delete" : "update";
+			if (confirm("Are you sure want to "+confirmLabel+" this testimonial?")) {
+				console.log("Confirmed: " + confirmLabel);
 				$.ajax({
 					url: 'manage-status.php',
 					type: 'POST',
@@ -167,6 +170,9 @@ if(strlen($_SESSION['id']==0)) {
 						$(".activity-msg").html("<span style='color: red;'>Something went wrong while deleting.</span>").fadeIn().delay(3000).fadeOut();
 					}
 				});
+			} else {
+				// Reset the select box to its previous value
+				$("#status_"+id).val(previousValue).val();
 			}
 		}
 		</script>
