@@ -10,19 +10,40 @@ if(isset($_POST['submit']))
 {	
 	$eid=$_GET['editid'];
 	$patname=$_POST['patname'];
-$patcontact=$_POST['patcontact'];
-$patemail=$_POST['patemail'];
-$gender=$_POST['gender'];
-$pataddress=$_POST['pataddress'];
-$patage=$_POST['patage'];
-$medhis=$_POST['medhis'];
-$sql=mysqli_query($con,"update tblpatient set PatientName='$patname',PatientContno='$patcontact',PatientEmail='$patemail',PatientGender='$gender',PatientAdd='$pataddress',PatientAge='$patage',PatientMedhis='$medhis' where ID='$eid'");
-if($sql)
-{
-echo "<script>alert('Patient info updated Successfully');</script>";
-header('location:manage-patient.php');
+	$patcontact=$_POST['patcontact'];
+	$patemail=$_POST['patemail'];
+	$gender=$_POST['gender'];
+	$pataddress=$_POST['pataddress'];
+	$patage=$_POST['patage'];
+	$medhis=$_POST['medhis'];
+	$sql=mysqli_query($con,"update tblpatient set PatientName='$patname',PatientContno='$patcontact',PatientEmail='$patemail',PatientGender='$gender',PatientAdd='$pataddress',PatientAge='$patage',PatientMedhis='$medhis' where ID='$eid'");
+	if($sql)
+	{
+		include ('../include/send-mail.php');
 
-}
+		// $from = 'satspandanawellness@gmail.com';
+		$from = 'admin@satspandana.com';
+		$email   = $patemail; // patient email
+		$subject = 'Welcome to SatSpandana Wellness';
+		$message = '<p>Dear '.$patname.',</p>';
+		$message .= '<p>Your details have been updated successfully. Please visit the portal.</p>';
+		$message .= '<p>Registered Full Name: '.$patname.'</p>';
+		$message .= '<p>Registered Email: '.$patemail.'</p>';
+
+		if(sendEmail($from, $email, $subject, $message)) {
+			$message = 'Patient info updated Successfully and email sent to the patient registered email address.';
+			$type = 'success';
+		} else {
+			$message = 'Patient info updated Successfully but email sending failed.';
+			$type = 'success';
+		}
+		echo "<script>
+			const myTimeout = setTimeout(reRoute, 3000);
+			function reRoute() {
+				window.location.href ='manage-patient.php'
+			}
+		</script>";
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -48,6 +69,14 @@ header('location:manage-patient.php');
 
 	</head>
 	<body>
+
+<?php if (isset($message) && !empty($message)): ?>
+    <div id="toast"><?php echo $message; ?></div>
+    <?php 
+        include ('../include/toast-script.php'); 
+    ?>
+<?php endif; ?>
+
 		<div id="app">		
 <?php include('include/sidebar.php');?>
 <div class="app-content">

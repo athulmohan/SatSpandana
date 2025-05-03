@@ -1,6 +1,8 @@
 <?php
 session_start();
 error_reporting(0);
+
+ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
 include('include/config.php');
 if(strlen($_SESSION['id']==0)) {
  header('location:logout.php');
@@ -10,19 +12,45 @@ if(isset($_POST['submit']))
 {	
 	$docid=$_SESSION['id'];
 	$patname=$_POST['patname'];
-$patcontact=$_POST['patcontact'];
-$patemail=$_POST['patemail'];
-$gender=$_POST['gender'];
-$pataddress=$_POST['pataddress'];
-$patage=$_POST['patage'];
-$medhis=$_POST['medhis'];
-$sql=mysqli_query($con,"insert into tblpatient(Docid,PatientName,PatientContno,PatientEmail,PatientGender,PatientAdd,PatientAge,PatientMedhis) values('$docid','$patname','$patcontact','$patemail','$gender','$pataddress','$patage','$medhis')");
-if($sql)
-{
-echo "<script>alert('Patient info added Successfully');</script>";
-echo "<script>window.location.href ='manage-patient.php'</script>";
+	$patcontact=$_POST['patcontact'];
+	$patemail=$_POST['patemail'];
+	$gender=$_POST['gender'];
+	$pataddress=$_POST['pataddress'];
+	$patage=$_POST['patage'];
+	$medhis=$_POST['medhis'];
+	$sql=mysqli_query($con,"insert into tblpatient(Docid,PatientName,PatientContno,PatientEmail,PatientGender,PatientAdd,PatientAge,PatientMedhis) values('$docid','$patname','$patcontact','$patemail','$gender','$pataddress','$patage','$medhis')");
+	if($sql)
+	{
+		include ('../include/send-mail.php');
 
-}
+		// $from = 'satspandanawellness@gmail.com';
+		$from = 'admin@satspandana.com';
+		$email   = $patemail; // patient email
+		$subject = 'Welcome to SatSpandana Wellness';
+		$message = '<p>Dear '.$patname.',</p>';
+		$message .= '<p>Your consultation with doctor was successful. Medical details are updated in the portal.</p>';
+		$message .= '<p>Please use the below details to login and verify the details updated.</p>';
+		$message .= '<p>Portal URL: '.$_SERVER['SERVER_NAME'].'/hms/user-login.php</p>';
+		$message .= '<p>Use Forget Password option to reset the password</p>';
+		$message .= '<p>Registered Full Name: '.$patname.'</p>';
+		$message .= '<p>Registered Email: '.$patemail.'</p>';
+
+		if(sendEmail($from, $email, $subject, $message)) {
+			$message = 'Patient info added Successfully and email sent to the patient registered email address.';
+			$type = 'success';
+		} else {
+			$message = 'Patient info added Successfully but email sending failed.';
+			$type = 'success';
+		}
+
+		echo "<script>
+        const myTimeout = setTimeout(reRoute, 3000);
+        function reRoute() {
+            window.location.href ='manage-patient.php'
+        }
+        </script>";
+
+	}
 }
 ?>
 <!DOCTYPE html>
@@ -62,6 +90,14 @@ error:function (){}
 </script>
 	</head>
 	<body>
+
+<?php if (isset($message) && !empty($message)): ?>
+    <div id="toast"><?php echo $message; ?></div>
+    <?php 
+        include ('../include/toast-script.php'); 
+    ?>
+<?php endif; ?>
+
 		<div id="app">		
 <?php include('include/sidebar.php');?>
 <div class="app-content">

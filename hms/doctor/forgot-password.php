@@ -60,14 +60,14 @@ echo "<script>window.location.href ='forgot-password.php'</script>";
 
 							<div class="form-group form-actions">
 								<span class="input-icon">
-									<input type="text" class="form-control" name="contactno" placeholder="Registred Contact Number">
+									<input type="text" class="form-control" name="contactno" placeholder="Registered Contact Number">
 									<i class="fa fa-lock"></i>
 									 </span>
 							</div>
 
 							<div class="form-group">
 								<span class="input-icon">
-									<input type="email" class="form-control" name="email" placeholder="Registred Email">
+									<input type="email" class="form-control" name="email" placeholder="Registered Email">
 									<i class="fa fa-user"></i> </span>
 							</div>
 
@@ -87,7 +87,7 @@ echo "<script>window.location.href ='forgot-password.php'</script>";
 					</form>
 
 					<div class="copyright">
-					<span class="text-bold text-uppercase"> Sat Spandana</span>
+					<span class="text-bold text-uppercase"> SatSpandana</span>
 					</div>
 			
 				</div>

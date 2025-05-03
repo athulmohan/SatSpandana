@@ -1,14 +1,14 @@
 <?php
 $roles = ['admin', 'doctor'];
 $linkSubPath = '';
+if(str_contains($_SERVER['REQUEST_URI'], 'hms')) {
+    $linkSubPath = '../';
+}
 foreach ($roles as $role) {
     if (str_contains($_SERVER['REQUEST_URI'], $role)) {
         $linkSubPath = '../../';
         break;
     }
-}
-if(str_contains($_SERVER['REQUEST_URI'], 'hms')) {
-    $linkSubPath = '../';
 }
 
 // $getReqUri = (str_contains($_SERVER['REQUEST_URI'], 'admin') || str_contains($_SERVER['REQUEST_URI'], 'admin')) ? true : false;
