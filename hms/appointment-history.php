@@ -9,10 +9,33 @@
 	} else{
 	if(isset($_GET['cancel']))
 	{
-		mysqli_query($con,"update appointment set userStatus='0' where id = '".$_GET['id']."'");
-		$_SESSION['msg']="Your Appointment is Cancelled !!";
-		$message = 'Your Appointment is Cancelled !!';
-		$type = 'info';
+		$sql = mysqli_query($con,"update appointment set userStatus='0' where id = '".$_GET['id']."'");
+        if($sql) {
+            $getSql=mysqli_query($con,"select users.fullName as fname, users.email, doctors.doctorName, appointment.*  from appointment join users on users.id=appointment.userId join doctors on appointment.doctorId=doctors.id where appointment.id='".$_GET['id']."'");
+            $row=mysqli_fetch_assoc($getSql);
+
+			include ('include/send-mail.php');
+
+            // $from = 'satspandanawellness@gmail.com';
+			$from = 'admin@satspandana.com';
+			$email   = $row['email']; // patient email
+			$subject = 'Welcome to SatSpandana Wellness';
+			$message = '<p>Dear '.$row['fname'].',</p>';
+			$message .= '<p>You have cancelled your appointment with the Doctor '.$row['doctorName'].'.</p>';
+			$message .= '<p>Appointment Date : '.$row['appointmentDate'].'</p>';
+			$message .= '<p>Appointment Time : '.$row['appointmentTime'].'</p>';
+
+			if(sendEmail($from, $email, $subject, $message)) {
+				$message = 'Appointment canceled and email sent to your registered email address.';
+				$type = 'success';
+			} else {
+				$message = 'Appointment canceled but email sending failed.';
+				$type = 'success';
+			}
+        }
+		// $_SESSION['msg']="Your Appointment is Cancelled !!";
+		// $message = 'Your Appointment is Cancelled !!';
+		// $type = 'info';
 	}
 ?>
 <!DOCTYPE html>
@@ -40,6 +63,12 @@
 </head>
 
 <body>
+<?php if (isset($message) && !empty($message)): ?>
+    <div id="toast"><?php echo $message; ?></div>
+    <?php 
+        include ('include/toast-script.php'); 
+    ?>
+<?php endif; ?>
     <div id="app">
         <?php include_once('include/notification.php'); ?>
         <?php include('include/sidebar.php');?>

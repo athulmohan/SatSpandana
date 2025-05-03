@@ -1,7 +1,7 @@
 <footer>
     <div class="footer-inner">
         <div class="pull-left">
-            <span class="text-bold text-uppercase"> Sat Spandana</span>
+            <span class="text-bold text-uppercase"> SatSpandana</span>
         </div>
         <div class="pull-right">
             <span class="go-top"><i class="ti-angle-up"></i></span>
