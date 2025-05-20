@@ -15,10 +15,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-2 col-md-3 col-sm-12">
-                        <a href="javascript:void(0);">
-                            <img src="<?php echo $logoSubPath ?>assets/images/satspandana-logo-png.png" alt="SAT SPANDANA">
+                        <a href="javascript:void(0);" class="mobile-logo">
+                            <img src="<?php echo $logoSubPath ?>assets/images/satspandana-logo-png.png" alt="SATSPANDANA">
                             <!-- <img src="../assets/images/satspandana-logo-png.png" alt="SAT SPANDANA"> -->
-                            <div class="col-lg-2 col-md-3 col-sm-12" style="color:#000;font-weight:bold; font-size:42px; margin-top: 1% !important; margin-bottom:1%;">
+                            <div class="col-lg-2 col-md-3 col-sm-12 mobile-side-menu" style="color:#000;font-weight:bold; font-size:42px; margin-top: 1% !important; margin-bottom:1%;">
                                 <!-- SATSPANDANA -->
                                 <a data-toggle="collapse" data-target="#menu" href="#menu" ><i class="fas d-block d-md-none small-menu fa-bars"></i></a>
                             </div>
@@ -69,7 +69,7 @@
                         </ul>
                     </div>
                     <div class="col-sm-2 appoint py-3">
-                        <a class="btn btn-success" href="<?php echo $linkSubPath; ?>guest-book-appointment.php">Book an Appointment</a>
+                        <a class="btn btn-success mobile-appt" href="<?php echo $linkSubPath; ?>guest-book-appointment.php">Book an Appointment</a>
                     </div>
                 </div>
 
