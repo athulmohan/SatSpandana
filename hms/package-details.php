@@ -43,7 +43,7 @@ while($package=mysqli_fetch_assoc($packageSql)) {
                         <p><?php echo $package['description']; ?></p>
 
                         <div class="mt-5">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="overflow-x:auto;">
                                 <table id="<?php echo $tbCls; ?>" class="table table-striped physio-dataTable" style="width:100%">
                                     <thead>
                                         <tr>
