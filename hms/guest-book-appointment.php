@@ -15,8 +15,29 @@ if(isset($_POST['submit']))
     $city=$_POST['city'];
     $gender=$_POST['gender'];
     $email=$_POST['email'];
+    $contactno=$_POST['contactno'];
     
-    $user_query=mysqli_query($con,"insert into users(fullname,address,city,gender,email) values('$fname','$address','$city','$gender','$email')");
+    $user_query=mysqli_query($con,"insert into users(fullname,address,city,gender,email,contact) values('$fname','$address','$city','$gender','$email','$contactno')");
+    
+    // checking for the record exist for same name, email and contact number
+    $patientDocId = $_POST['doctor'];
+    $existQuery = "SELECT COUNT(*) AS record_count
+                    FROM tblpatient
+                    WHERE Docid = '$patientDocId'
+                    AND LOWER(TRIM(PatientName)) = LOWER(TRIM('$fname'))
+                    AND TRIM(PatientContno) = TRIM('$contactno')
+                    AND LOWER(TRIM(PatientEmail)) = LOWER(TRIM('$email'))";
+
+    $result = mysqli_query($con, $existQuery);
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $record_count = $row['record_count'];
+        if ($record_count == 0) {
+            $patient_query=mysqli_query($con,
+            "insert into tblpatient(Docid, PatientName,PatientContno,PatientEmail,PatientGender,PatientAdd) 
+            values('$patientDocId', '$fname','$contactno','$email','$gender','$address')");
+        }
+    }
 
     if($user_query > 0)
     {
@@ -200,6 +221,15 @@ if(isset($_POST['submit']))
                                         <i class="fa fa-envelope"></i> </span>
                                     <span id="user-availability-status1" style="font-size:12px;"></span>
                                 </div>
+
+                                <div class="form-group">
+                                    <span class="input-icon">
+                                        <input type="text" class="form-control" name="contactno" id="contactno"
+                                            placeholder="Contact Number" required>
+                                        <i class="fa fa-phone"></i> </span>
+                                    <span id="user-availability-status2" style="font-size:12px;"></span>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="DoctorSpecialization">
                                         Doctor Specialization

@@ -80,15 +80,44 @@ $sdata=$_POST['searchdata'];
 <th class="center">#</th>
 <th>Patient Name</th>
 <th>Patient Contact Number</th>
+<th>Patient Email </th>
 <th>Patient Gender </th>
-<th>Creation Date </th>
-<th>Updation Date </th>
 <th>Action</th>
 </tr>
 </thead>
 <tbody>
 <?php
-$sql=mysqli_query($con,"select * from tblpatient where PatientName like '%$sdata%'|| PatientContno like '%$sdata%'");
+
+$unionQuery = "SELECT
+    fullName AS PatientName,
+	email AS PatientEmail,
+    contact AS PatientContno,
+    gender AS PatientGender,
+    regDate AS CreationDate,
+    updationDate AS UpdationDate,
+    'user' AS SourceTable
+FROM
+    users
+WHERE
+    fullName LIKE '%$sdata%' OR contact LIKE '%$sdata%'
+
+UNION
+
+SELECT
+    PatientName AS PatientName,
+	PatientEmail AS PatientEmail,
+    PatientContno AS PatientContno,
+    PatientGender AS PatientGender,
+    CreationDate AS CreationDate,
+    UpdationDate AS UpdationDate,
+    'patient' AS SourceTable
+FROM
+    tblpatient
+WHERE
+    PatientName LIKE '%$sdata%' OR PatientContno LIKE '%$sdata%';";
+
+// $sql=mysqli_query($con,"select * from tblpatient where PatientName like '%$sdata%'|| PatientContno like '%$sdata%'");
+$sql=mysqli_query($con, $unionQuery);
 $num=mysqli_num_rows($sql);
 if($num>0){
 $cnt=1;
@@ -99,13 +128,10 @@ while($row=mysqli_fetch_array($sql))
 <td class="center"><?php echo $cnt;?>.</td>
 <td class="hidden-xs"><?php echo $row['PatientName'];?></td>
 <td><?php echo $row['PatientContno'];?></td>
+<td><?php echo $row['PatientEmail'];?></td>
 <td><?php echo $row['PatientGender'];?></td>
-<td><?php echo $row['CreationDate'];?></td>
-<td><?php echo $row['UpdationDate'];?>
-</td>
 <td>
-
-<a href="edit-patient.php?editid=<?php echo $row['ID'];?>" class="btn btn-primary btn-sm">Edit</a> <a href="view-patient.php?viewid=<?php echo $row['ID'];?>" class="btn btn-warning btn-sm">View Details</a>
+	<a href="edit-patient.php?editid=<?php echo $row['ID'];?>" class="btn btn-primary btn-sm">Edit</a> <a href="view-patient.php?viewid=<?php echo $row['ID'];?>" class="btn btn-warning btn-sm">View Details</a>
 </td>
 </tr>
 <?php 

@@ -18,11 +18,43 @@
 		$time=$_POST['apptime'];
 		$userstatus=1;
 		$docstatus=1;
+
+        // getting the user details
+        $getUser=mysqli_query($con,"select * from users where id='$userid'");
+        $rowUser=mysqli_fetch_assoc($getUser);
+        
+        if (mysqli_num_rows($getUser) > 0) {
+            $fname = $rowUser['fullName'];
+            $contactno = $rowUser['contact'];
+            $email = $rowUser['email'];
+            $gender = $rowUser['gender'];
+            $address = $rowUser['address'];
+            
+            // checking for the record exist for same name, email and contact number
+            $existQuery = "SELECT COUNT(*) AS record_count
+                            FROM tblpatient
+                            WHERE Docid = '$doctorid'
+                            AND LOWER(TRIM(PatientName)) = LOWER(TRIM('$fname'))
+                            AND TRIM(PatientContno) = TRIM('$contactno')
+                            AND LOWER(TRIM(PatientEmail)) = LOWER(TRIM('$email'))";
+
+            $resultExist = mysqli_query($con, $existQuery);
+            if (mysqli_num_rows($resultExist) > 0) {
+                $rowExist = mysqli_fetch_assoc($resultExist);
+                $record_count = $rowExist['record_count'];
+                if ($record_count == 0) {
+                    $patient_query=mysqli_query($con,
+                    "insert into tblpatient(Docid, PatientName,PatientContno,PatientEmail,PatientGender,PatientAdd) 
+                    values('$doctorid', '$fname','$contactno','$email','$gender','$address')");
+                }
+            }
+        }
+
 		$query=mysqli_query($con,"insert into appointment(doctorSpecialization,doctorId,locationId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$specilization','$doctorid','$locationid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
 		if($query)
 		{
-            $getUser=mysqli_query($con,"select * from users where id='$userid'");
-            $rowUser=mysqli_fetch_assoc($getUser);
+            // $getUser=mysqli_query($con,"select * from users where id='$userid'");
+            // $rowUser=mysqli_fetch_assoc($getUser);
 
             include ('include/send-mail.php');
 
