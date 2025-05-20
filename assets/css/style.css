@@ -1245,3 +1245,9 @@ header {
     float: right;
   }
 }
+
+@media only screen and (orientation: landscape) {
+  .mobile-logo img {
+    width: 50%;
+  }
+}
