@@ -68,7 +68,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-sm-2 appoint py-3">
+                    <div class="col-md-2 col-sm-12 col-xs-2 appoint py-3">
                         <a class="btn btn-success mobile-appt" href="<?php echo $linkSubPath; ?>guest-book-appointment.php">Book an Appointment</a>
                     </div>
                 </div>

@@ -1223,3 +1223,25 @@ header {
     from {bottom: 30px; opacity: 1;}
     to {bottom: 0; opacity: 0;}
 }
+
+.header-nav .appoint .mobile-appt {
+  float: right;
+}
+
+@media only screen and (max-width: 800px) {
+  /* Applies to mobile phones */
+  body {
+    font-family: "mouse-300", Arial, Helvetica, sans-serif;
+  }
+  .header-nav .mobile-logo {
+    width: 50%;
+    float: left;
+  }
+  .header-nav .mobile-side-menu {
+    width: 50%;
+    float: right;
+  }
+  .header-nav .appoint .mobile-appt {
+    float: right;
+  }
+}
