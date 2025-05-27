@@ -61,6 +61,12 @@ if(isset($_POST['testimony_submit'])) {
 
     if($query) {
         $contactMsg = "Testmonial Updated Successfully. ".$errorFileUpload;
+        echo "<script>
+        const myTimeout = setTimeout(reRoute, 2000);
+        function reRoute() {
+            window.location.href ='index.php'
+        }
+        </script>";
     }
 }
 
@@ -87,18 +93,23 @@ if(isset($_POST['submit']))
 
         if(sendEmail($from, $email, $subject, $message)) {
             $contactMsg = "Your information successfully submitted and email sent to you.";
-            echo "<script>console.log('Email Sent ...');</script>";
+            // echo "<script>console.log('Email Sent ...');</script>";
+            echo "<script>
+            const myTimeout = setTimeout(reRoute, 2000);
+            function reRoute() {
+                window.location.href ='index.php'
+            }
+            </script>";
         } else {
             $contactMsg = "Your information successfully submitted but email not sent.";
-            echo "<script>console.log('Email Not Sent ...');</script>";
+            // echo "<script>console.log('Email Not Sent ...');</script>";
+            echo "<script>
+            const myTimeout = setTimeout(reRoute, 2000);
+            function reRoute() {
+                window.location.href ='index.php'
+            }
+            </script>";
         }
-
-		echo "<script>
-        // const myTimeout = setTimeout(reRoute, 2000);
-        // function reRoute() {
-        //     window.location.href ='index.php'
-        // }
-        </script>";
     }
 } ?>
 <!doctype html>
@@ -115,6 +126,7 @@ if(isset($_POST['submit']))
     <link rel="stylesheet" href="assets/css/animate.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/testimony-style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/new-testimony-style.css" />
 </head>
 
 <body id="main-page">
@@ -416,106 +428,168 @@ if(isset($_POST['submit']))
 
     <!--  ************************* Testimony Starts Here ************************** -->
     <section id="testimony" class="mb-5 testimony container">
-        <div class="inner-title mb-0">
-            <h2>Testimonials</h2>
-            <!-- <p>What Others Think About Us.</p> -->
-            <p>Words from Our Clients.</p>
-        </div>
-        
-        <?php 
-            $testimonySql=mysqli_query($con,"SELECT * from testimony where status=1"); 
-            $testimonyCount=mysqli_num_rows($testimonySql);
-            $itemsPerSlide = 3;
-            $totalSlides = ceil($testimonyCount / $itemsPerSlide);
-        ?>
+        <div class="new-testimonial-change">
+            <?php 
+                $testimonySql=mysqli_query($con,"SELECT * from testimony where status=1"); 
+                $testimonyCount=mysqli_num_rows($testimonySql);
+                $itemsPerSlide = 3;
+                $totalSlides = ceil($testimonyCount / $itemsPerSlide);
+            ?>
+            <div class="testimonial-section">
+                <div class="testimonial-header">
+                    <h2>Clients <br> <span>Testimonials</span></h2>
+                    <p>
+                    SatSpandana beckons the infirm to a haven of profound healing. For those adrift in life's relentless tide, it offers a sacred harbor for the rekindling of body, mind, and spirit.
+                    </p>
+                    <div class="<?php echo ($testimonyCount > 2) ? 'testimonial-nav' : 'd-none testimonial-nav'; ?>">
+                        <button id="prevBtn">&#8592;</button>
+                        <button id="nextBtn">&#8594;</button>
+                    </div>
+                    <!-- <a href="#" class="view-more">View More</a> -->
+                    <button class="btn btn-secondary addTestimony" data-toggle="modal" data-target="#addTestimonyModal">+ Add Testimonials</button>
+                    <div class="modal fade" id="addTestimonyModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addTestimony" aria-hidden="true">
+                        <?php include_once('hms/include/add-testimony-modal.php'); ?>
+                    </div>
+                </div>
 
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <button class="btn btn-secondary addTestimony" data-toggle="modal" data-target="#addTestimonyModal">+ Add Testimonials</button>
-            <div class="modal fade" id="addTestimonyModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addTestimony" aria-hidden="true">
-                <?php include_once('hms/include/add-testimony-modal.php'); ?>
-            </div>
-            <?php if($testimonyCount > 0) { ?>
-                <div id="testimonyCarousel">    
-                    <!-- Indicators -->
-                    <ol class="carousel-indicators">
-                        <?php
-                        for($i = 1; $i <= $totalSlides; $i++) {
-                        ?>
-                            <li data-target="#carousel-example-generic" data-slide-to="<?php echo $i; ?>" class="<?php echo ($i == 1) ? 'active' : '' ?>"></li>
-                            <!-- <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            <li data-target="#carousel-example-generic" data-slide-to="3"></li> -->
-                        <?php } ?>
-                    </ol>
-
-                    <!-- Wrapper for slides -->
-                    <div class="col-md-12 carousel-inner testimony-carousel-inner" role="listbox">
-                        <?php 
-                            // $result = mysqli_fetch_assoc($testimonySql);
-                            // echo "<pre>"; print_r($result);
-                            // foreach ($result as $row) { 
-                            $j = 0;
-                            $counter = 0;
-                            echo '<div class="carousel-item active"><div class="row">';
+                <div class="testimonial-carousel-wrapper">
+                    <?php if($testimonyCount > 0) { ?>
+                        <div class="testimonial-carousel" id="testimonialCarousel">
+                            <!-- Testimonial Item -->
+                            <?php
                             while($row=mysqli_fetch_array($testimonySql)) {
-                                $j++;
                                 $testimonyID = $row['id'];
                                 $witnessImage = (isset($row['image']) && $row['image']!=='') ? $row['image'] : 'default-pic.png';
                                 $witnessName = $row['witness_name'];
                                 $witnessDesignation = $row['witness_designation'];
                                 $testimony = $row['testimony'];
                                 $rating = $row['rating'];
-
                                 $testimonyImgPath = "assets/images/testimony/".$witnessImage;
-
-                                if ($counter > 0 && $counter % 3 == 0) { // 3 items per slide
-                                    echo '</div></div><div class="carousel-item"><div class="row">';
-                                }
-                            ?>
-
-                                <!-- <div class="col-md-4 carousel-item <?php //echo ($j == 1) ? 'active' : '' ?>" id="item-<?php //echo $testimonyID; ?>"> -->
-                                    <!-- <button class="btn btn-light delete-button" onclick="deleteTestimony(<?php //echo $testimonyID; ?>)">X</button> -->
-                                    <div class="col-md-4 carousel-tiles">
-                                        <div class="imgBox animated bounceInRight mb-3" style="animation-delay: 1s">
-                                            <img src="<?php echo $testimonyImgPath; ?>" alt="<?php echo $witnessImage; ?>">
-                                        </div>
-                                        <div class="carousel-caption animated bounceInLeft"  style="animation-delay: 2s">
-                                            <input type="hidden" class="id" value="<?php echo $testimonyID; ?>" id="testimonyID-<?php echo $testimonyID; ?>" name="tbl_testimony_id">
-                                            <h5 style="color: #555;">Rating: <span id="stars-<?php echo $testimonyID; ?>"></span></h5>
-                                            <h5 class="testimony-alter-style"><?php echo $witnessName; ?></h5>
-                                            <h5 style="color: #555;"><?php echo $witnessDesignation; ?></h5>
-                                            <p class="testimony-alter-style"><i>&#x275D <?php echo $testimony; ?> &#x275E</i></p>
-                                        </div>
-                                    </div>
-                                <!-- </div> -->
-
-                                <script>
-                                    var rating = <?php echo $rating; ?>;
-                                    var starsContainer = document.getElementById('stars-<?php echo $testimonyID; ?>');
-                                    var stars = '';
-
-                                    for (var i = 0; i < rating; i++) {
-                                        stars += '&#9733;';
-                                    }
-                                    starsContainer.innerHTML = stars;
-                                </script>
-                                <?php 
-                                $counter++;
-                            } 
-                        echo '</div></div>'; // Close last slide
-                        ?>
-                    </div>
-
-                    <!-- Controls -->
-                    <a class="carousel-control-prev left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="sr-only">Next</span>
-                    </a>
+                                ?>
+                                <div class="testimonial-item">
+                                    <img src="<?php echo $testimonyImgPath; ?>" alt="Client 1">
+                                    <h3><?php echo $witnessName; ?></h3>
+                                    <p class="title"><?php echo $witnessDesignation; ?></p>
+                                    <h5 style="color: #555;">Rating: <span id="stars-<?php echo $testimonyID; ?>"></span></h5>
+                                    <p><?php echo $testimony; ?></p>
+                                </div>
+                            <?php } ?>
+                            <!-- Add more items as needed -->
+                        </div>
+                        <?php } else { ?>
+                            <div class="testimonial-notFound">
+                                <h4>No Testimonial Found...</h3>
+                            </div>
+                        <?php } ?>
                 </div>
-            <?php } ?>
+            </div>
+        </div>
+        <!-- BELOW: OLD TESTIMONIAL SECTION COMMENTED OUT -->
+        <div class="d-none">
+            <div class="inner-title mb-0">
+                <h2>Testimonials</h2>
+                <!-- <p>What Others Think About Us.</p> -->
+                <p>Words from Our Clients.</p>
+            </div>
+            
+            <?php 
+                $testimonySql=mysqli_query($con,"SELECT * from testimony where status=1"); 
+                $testimonyCount=mysqli_num_rows($testimonySql);
+                $itemsPerSlide = 3;
+                $totalSlides = ceil($testimonyCount / $itemsPerSlide);
+            ?>
+
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <!-- <button class="btn btn-secondary addTestimony" data-toggle="modal" data-target="#addTestimonyModal">+ Add Testimonials</button>
+                <div class="modal fade" id="addTestimonyModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addTestimony" aria-hidden="true">
+                    <?php //include_once('hms/include/add-testimony-modal.php'); ?>
+                </div> -->
+                <?php if($testimonyCount > 0) { ?>
+                    <div id="testimonyCarousel">    
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <?php
+                            for($i = 1; $i <= $totalSlides; $i++) {
+                            ?>
+                                <li data-target="#carousel-example-generic" data-slide-to="<?php echo $i; ?>" class="<?php echo ($i == 1) ? 'active' : '' ?>"></li>
+                                <!-- <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="3"></li> -->
+                            <?php } ?>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="col-md-12 carousel-inner testimony-carousel-inner" role="listbox">
+                            <?php 
+                                // $result = mysqli_fetch_assoc($testimonySql);
+                                // echo "<pre>"; print_r($result);
+                                // foreach ($result as $row) { 
+                                $j = 0;
+                                $counter = 0;
+                                echo '<div class="carousel-item active"><div class="row">';
+                                while($row=mysqli_fetch_array($testimonySql)) {
+                                    $j++;
+                                    $testimonyID = $row['id'];
+                                    $witnessImage = (isset($row['image']) && $row['image']!=='') ? $row['image'] : 'default-pic.png';
+                                    $witnessName = $row['witness_name'];
+                                    $witnessDesignation = $row['witness_designation'];
+                                    $testimony = $row['testimony'];
+                                    $rating = $row['rating'];
+
+                                    $testimonyImgPath = "assets/images/testimony/".$witnessImage;
+                                    // $testimonyImgPath = isImagePath($testimonyImgPath) 
+                                    // ? $testimonyImgPath 
+                                    // : 'assets/images/testimony/default-pic.png';
+
+                                    if ($counter > 0 && $counter % 3 == 0) { // 3 items per slide
+                                        echo '</div></div><div class="carousel-item"><div class="row">';
+                                    }
+                                ?>
+
+                                    <!-- <div class="col-md-4 carousel-item <?php //echo ($j == 1) ? 'active' : '' ?>" id="item-<?php //echo $testimonyID; ?>"> -->
+                                        <!-- <button class="btn btn-light delete-button" onclick="deleteTestimony(<?php //echo $testimonyID; ?>)">X</button> -->
+                                        <div class="col-md-4 carousel-tiles">
+                                            <div class="imgBox animated bounceInRight mb-3" style="animation-delay: 1s">
+                                                <img src="<?php echo $testimonyImgPath; ?>" alt="<?php echo $witnessImage; ?>">
+                                            </div>
+                                            <div class="carousel-caption animated bounceInLeft"  style="animation-delay: 2s">
+                                                <input type="hidden" class="id" value="<?php echo $testimonyID; ?>" id="testimonyID-<?php echo $testimonyID; ?>" name="tbl_testimony_id">
+                                                <h5 style="color: #555;">Rating: <span id="stars-<?php echo $testimonyID; ?>"></span></h5>
+                                                <h5 class="testimony-alter-style"><?php echo $witnessName; ?></h5>
+                                                <h5 style="color: #555;"><?php echo $witnessDesignation; ?></h5>
+                                                <p class="testimony-alter-style"><i>&#x275D <?php echo $testimony; ?> &#x275E</i></p>
+                                            </div>
+                                        </div>
+                                    <!-- </div> -->
+
+                                    <script>
+                                        var rating = <?php echo $rating; ?>;
+                                        var starsContainer = document.getElementById('stars-<?php echo $testimonyID; ?>');
+                                        var stars = '';
+
+                                        for (var i = 0; i < rating; i++) {
+                                            stars += '&#9733;';
+                                        }
+                                        starsContainer.innerHTML = stars;
+                                    </script>
+                                    <?php 
+                                    $counter++;
+                                } 
+                            echo '</div></div>'; // Close last slide
+                            ?>
+                        </div>
+
+                        <!-- Controls -->
+                        <a class="carousel-control-prev left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                <?php } ?>
+            </div>
         </div>
     </section>
     <!-- ######## Testimony End ####### -->
@@ -621,6 +695,7 @@ if(isset($_POST['submit']))
 
 <script src="assets/js/script.js"></script>
 <script src="assets/js/testimony-script.js"></script>
+<script src="assets/js/new-testimony-script.js"></script>
 
 <script>
     let currentIndex = 0;
