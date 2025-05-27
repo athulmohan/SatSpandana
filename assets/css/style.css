@@ -1246,7 +1246,7 @@ header {
   }
 }
 
-@media only screen and (orientation: landscape) {
+@media only screen and (orientation: landscape) and (max-width: 800px) {
   .mobile-logo img {
     width: 50%;
   }
