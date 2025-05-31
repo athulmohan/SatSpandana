@@ -62,7 +62,7 @@ if(isset($_POST['testimony_submit'])) {
     if($query) {
         $contactMsg = "Testmonial Updated Successfully. ".$errorFileUpload;
         echo "<script>
-        const myTimeout = setTimeout(reRoute, 2000);
+        const myTimeout = setTimeout(reRoute, 3000);
         function reRoute() {
             window.location.href ='index.php'
         }
@@ -446,7 +446,7 @@ if(isset($_POST['submit']))
                         <button id="nextBtn">&#8594;</button>
                     </div>
                     <!-- <a href="#" class="view-more">View More</a> -->
-                    <button class="btn btn-secondary addTestimony" data-toggle="modal" data-target="#addTestimonyModal">+ Add Testimonials</button>
+                    <button class="btn btn-secondary addTestimony btn-success" data-toggle="modal" data-target="#addTestimonyModal">+ Add Testimonials</button>
                     <div class="modal fade" id="addTestimonyModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addTestimony" aria-hidden="true">
                         <?php include_once('hms/include/add-testimony-modal.php'); ?>
                     </div>
@@ -457,7 +457,10 @@ if(isset($_POST['submit']))
                         <div class="testimonial-carousel" id="testimonialCarousel">
                             <!-- Testimonial Item -->
                             <?php
+                            $i = 0;
                             while($row=mysqli_fetch_array($testimonySql)) {
+                                $i++;
+                                $item_additional_style = (($i % 2) == 0) ? 'testimonial-item-even' : 'testimonial-item-odd';
                                 $testimonyID = $row['id'];
                                 $witnessImage = (isset($row['image']) && $row['image']!=='') ? $row['image'] : 'default-pic.png';
                                 $witnessName = $row['witness_name'];
@@ -465,16 +468,28 @@ if(isset($_POST['submit']))
                                 $testimony = $row['testimony'];
                                 $rating = $row['rating'];
                                 $testimonyImgPath = "assets/images/testimony/".$witnessImage;
+
+                                $displayTestimonial = (strlen($testimony) > 100) 
+                                                ? substr($testimony, 0, 100) . '...' 
+                                                : $testimony;
+
                                 ?>
-                                <div class="testimonial-item">
-                                    <img src="<?php echo $testimonyImgPath; ?>" alt="Client 1">
-                                    <h3><?php echo $witnessName; ?></h3>
-                                    <p class="title"><?php echo $witnessDesignation; ?></p>
-                                    <h5 style="color: #555;">Rating: <span id="stars-<?php echo $testimonyID; ?>"></span></h5>
-                                    <p><?php echo $testimony; ?></p>
+                                <div class="testimonial-item <?php echo $item_additional_style; ?>" 
+                                    data-name="<?php echo htmlspecialchars($witnessName); ?>"
+                                    data-designation="<?php echo htmlspecialchars($witnessDesignation); ?>"
+                                    data-testimony="<?php echo htmlspecialchars($testimony); ?>"
+                                    data-image="<?php echo $testimonyImgPath; ?>"
+                                    data-rating="<?php echo $rating; ?>">
+                                        <img src="<?php echo $testimonyImgPath; ?>" alt="<?php echo $witnessName; ?>">
+                                        <h3><?php echo $witnessName; ?></h3>
+                                        <p class="title"><?php echo $witnessDesignation; ?></p>
+                                        <h5 style="color: #555;">Rating: <span style="color: #00ab9f;" id="stars-<?php echo $testimonyID; ?>"></span></h5>
+                                        <p><?php echo $displayTestimonial; ?></p>
                                 </div>
                             <?php } ?>
-                            <!-- Add more items as needed -->
+                            <!-- view modal for testimonial -->
+                            <?php include_once('hms/include/view-testimony-modal.php'); ?>
+
                         </div>
                         <?php } else { ?>
                             <div class="testimonial-notFound">
