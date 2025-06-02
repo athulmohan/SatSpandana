@@ -487,7 +487,7 @@ $(document).ready(function () {
 });
 
 tinymce.init({
-	selector: '#tinymce_editor',
+	selector: 'textarea',
 	plugins: 'lists link image table code',
 	toolbar: 'undo redo | styles | fontfamily fontsize | bold italic underline | alignleft aligncenter alignright alignjustify | outdent indent',
 	font_family_formats:

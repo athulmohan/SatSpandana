@@ -10,14 +10,14 @@ if(isset($_POST['submit']))
 {
 $doctorspecilization=$_POST['doctorspecilization'];
 $programs=$_POST['programs'];
-$sql=mysqli_query($con,"insert into doctorSpecilization(specilization, programs) values('$doctorspecilization', '$programs')");
+$sql=mysqli_query($con,"insert into doctorspecilization(specilization, programs) values('$doctorspecilization', '$programs')");
 $_SESSION['msg']="Doctor Specialization added successfully !!";
 }
 //Code Deletion
 if(isset($_GET['del']))
 {
 $sid=$_GET['id'];	
-mysqli_query($con,"delete from doctorSpecilization where id = '$sid'");
+mysqli_query($con,"delete from doctorspecilization where id = '$sid'");
 $_SESSION['msg']="data deleted !!";
 }
 ?>
@@ -43,10 +43,10 @@ $_SESSION['msg']="data deleted !!";
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/plugins.css">
     <link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-    <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-    <script type="text/javascript">
+    <!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script> -->
+    <!-- <script type="text/javascript">
 		bkLib.onDomLoaded(nicEditors.allTextAreas);
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -122,7 +122,7 @@ $_SESSION['msg']="data deleted !!";
 
                         <div class="row">
                             <div class="col-md-12">
-                                <h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Docter
+                                <h5 class="over-title margin-bottom-15">Manage <span class="text-bold">Doctor
                                         Specialization</span></h5>
 
                                 <table class="table table-hover" id="sample-table-1">
@@ -138,7 +138,7 @@ $_SESSION['msg']="data deleted !!";
                                     </thead>
                                     <tbody>
                                         <?php
-											$sql=mysqli_query($con,"select * from doctorSpecilization");
+											$sql=mysqli_query($con,"select * from doctorspecilization");
 											$cnt=1;
 											while($row=mysqli_fetch_array($sql))
 											{
@@ -236,6 +236,7 @@ $_SESSION['msg']="data deleted !!";
     <script src="vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
     <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <script src="https://cdn.tiny.cloud/1/d2v0midup7lpvowewkee6om89twgjbeveofkrrpwsc5z7gm7/tinymce/6/tinymce.min.js"></script>  
     <!-- start: CLIP-TWO JAVASCRIPTS -->
     <script src="assets/js/main.js"></script>
     <!-- start: JavaScript Event Handlers for this page -->

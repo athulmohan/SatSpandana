@@ -11488,3 +11488,7 @@ td.small-width {
 .tox-statusbar {
   display: none !important;
 }
+
+.tox .tox-edit-area__iframe {
+  background-color: #1fbba6 !important;
+}

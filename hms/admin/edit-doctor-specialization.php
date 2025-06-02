@@ -11,7 +11,7 @@ if(isset($_POST['submit']))
 	// echo "<pre>"; print_r($_POST);
 	$docspecialization=$_POST['doctorspecilization'];
     $programs = str_replace("'", '"', $_POST['programs']);
-	$sql=mysqli_query($con,"update  doctorSpecilization set specilization='$docspecialization', programs='$programs' where id='$id'");
+	$sql=mysqli_query($con,"update  doctorspecilization set specilization='$docspecialization', programs='$programs' where id='$id'");
 	$_SESSION['msg']="Doctor Specialization updated successfully !!";
 } 
 
@@ -38,15 +38,9 @@ if(isset($_POST['submit']))
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/plugins.css">
     <link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-    <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-	<!-- <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script> -->
+    <!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script> -->
     <script type="text/javascript">
-    	bkLib.onDomLoaded(nicEditors.allTextAreas);
-		// ClassicEditor
-        // .create( document.querySelector( '#editor' ) )
-        // .catch( error => {
-        //     console.error( error );
-        // } );
+    	// bkLib.onDomLoaded(nicEditors.allTextAreas);
     </script>
 </head>
 
@@ -93,7 +87,7 @@ if(isset($_POST['submit']))
                                                     <?php echo htmlentities($_SESSION['msg']="");?></p>
                                                 <form role="form" name="dcotorspcl" method="post">
                                                     <?php $id=intval($_GET['id']);
-													$sql=mysqli_query($con,"select * from doctorSpecilization where id='$id'");
+													$sql=mysqli_query($con,"select * from doctorspecilization where id='$id'");
                                                     while($row=mysqli_fetch_assoc($sql))
                                                     {
 													?>
@@ -162,6 +156,7 @@ if(isset($_POST['submit']))
     <script src="vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
     <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+    <script src="https://cdn.tiny.cloud/1/d2v0midup7lpvowewkee6om89twgjbeveofkrrpwsc5z7gm7/tinymce/6/tinymce.min.js"></script>
     <!-- start: CLIP-TWO JAVASCRIPTS -->
     <script src="assets/js/main.js"></script>
     <!-- start: JavaScript Event Handlers for this page -->
