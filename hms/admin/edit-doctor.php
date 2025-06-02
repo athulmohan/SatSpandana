@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 error_reporting(0);
 include('include/config.php');
@@ -55,13 +56,13 @@ if(isset($_POST['submit']))
 		$uploadFile = $uploadDir . basename($_FILES['file']['name']);
 		$filename = basename($_FILES['file']['name']);
 		if (move_uploaded_file($_FILES['file']['tmp_name'], $uploadFile)) {
-			echo "File successfully uploaded to: " . htmlspecialchars($uploadFile);
+			$msg = "File successfully uploaded to: " . htmlspecialchars($uploadFile);
 		} else {
-			echo "File upload failed.";
+			$msg = "File upload failed.";
 		}
 	} else {
 		$filename = $_POST['oldfile'];
-		echo "No file was uploaded.";
+		$msg = "No file was uploaded.";
 	}
 	$sql=mysqli_query($con,"Update doctors set specilization='$docspecialization',role='$docrole',doctorName='$docname',address='$docaddress',docFees='$docfees',contactno='$doccontactno',docEmail='$docemail',profile_pic='$filename',about_doctor='$aboutDoc' where id='$did'");
 	if($sql)
@@ -92,9 +93,9 @@ if(isset($_POST['submit']))
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/plugins.css">
     <link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-	<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+	<!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script> -->
     <script type="text/javascript">
-		bkLib.onDomLoaded(nicEditors.allTextAreas);
+		// bkLib.onDomLoaded(nicEditors.allTextAreas);
 	</script>
 
 </head>
@@ -253,7 +254,7 @@ if(isset($_POST['submit']))
 															<label for="about_doctor">
 																About Doctor
 															</label>
-															<textarea class="form-control" name="about_doctor" id="about_doctor"
+															<textarea class="form-control" name="about_doctor" id="tinymce_editor"
 																rows="12"><?php  echo $data['about_doctor'];?></textarea>
 														</div>
 												<?php } ?>
@@ -311,6 +312,8 @@ if(isset($_POST['submit']))
         <script src="vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
         <script src="vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
         <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+		<!-- <script src="../../assets/js/tinymce.min.js"></script> -->
+		<script src="https://cdn.tiny.cloud/1/d2v0midup7lpvowewkee6om89twgjbeveofkrrpwsc5z7gm7/tinymce/6/tinymce.min.js"></script>
         <!-- start: CLIP-TWO JAVASCRIPTS -->
         <script src="assets/js/main.js"></script>
         <!-- start: JavaScript Event Handlers for this page -->

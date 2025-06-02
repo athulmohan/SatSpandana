@@ -18,7 +18,7 @@ if(isset($_POST['submit']))
 	$password=md5($_POST['npass']);
 	$aboutDoc=$_POST['about_doctor'];
 
-	if (isset($_FILES['file'])) {
+	if (isset($_FILES['files']['name'])) {
 		$uploadDir = '../../assets/images/teams/doctors/'; // Directory to save the file
 	
 		// Ensure the upload directory exists
@@ -99,9 +99,10 @@ if(isset($_POST['submit']))
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/plugins.css">
     <link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-	<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+	<!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script> -->
+    <!-- <script src="https://cdn.tiny.cloud/1/vi96ar66kzzxmxcl8uo6b4z31glrops3cowbbgtma3btbwv0/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> -->
     <script type="text/javascript">
-		bkLib.onDomLoaded(nicEditors.allTextAreas);
+		// bkLib.onDomLoaded(nicEditors.allTextAreas);
 		function valid() {
 			if (document.adddoc.npass.value != document.adddoc.cfpass.value) {
 				alert("Password and Confirm Password Field do not match  !!");
@@ -281,8 +282,8 @@ if(isset($_POST['submit']))
 
                                                     <div class="form-group">
                                                         <label for="about_doctor">About Doctor</label>
-                                                        <textarea class="form-control" name="about_doctor" id="about_doctor"
-                                                            rows="12"><?php  echo $row['about_doctor'];?></textarea>
+                                                        <textarea class="form-control" name="about_doctor" id="tinymce_editor"
+                                                            rows="12"><?php  //echo $row['about_doctor'];?></textarea>
                                                     </div>
 
                                                     <button type="submit" name="submit" id="submit"
@@ -334,6 +335,8 @@ if(isset($_POST['submit']))
     <script src="vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
     <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+     <!-- <script src="../../assets/js/tinymce.min.js" referrerpolicy="origin"></script> -->
+      <script src="https://cdn.tiny.cloud/1/d2v0midup7lpvowewkee6om89twgjbeveofkrrpwsc5z7gm7/tinymce/6/tinymce.min.js"></script>
     <!-- start: CLIP-TWO JAVASCRIPTS -->
     <script src="assets/js/main.js"></script>
     <!-- start: JavaScript Event Handlers for this page -->

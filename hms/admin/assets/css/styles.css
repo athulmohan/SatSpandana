@@ -11485,3 +11485,6 @@ td.small-width {
   text-align: center;
   color: #ffffff;
 }
+.tox-statusbar {
+  display: none !important;
+}

@@ -485,3 +485,28 @@ $(document).ready(function () {
 	  form.setAttribute("autocomplete", "off");
 	});
 });
+
+tinymce.init({
+	selector: '#tinymce_editor',
+	plugins: 'lists link image table code',
+	toolbar: 'undo redo | styles | fontfamily fontsize | bold italic underline | alignleft aligncenter alignright alignjustify | outdent indent',
+	font_family_formats:
+		'Arial=Arial, Helvetica, sans-serif;' +
+		'Courier New=CourierNew,courier,monospace;' +
+		'Georgia=georgia,palatino;' +
+		'Tahoma=tahoma,arial,helvetica,sans-serif;' +
+		'Verdana=verdana,geneva;' +
+		'Helvetica=helvetica,arial,sans-serif;' +
+		'Impact=impact,chicago;' +
+		'Open Sans=OpenSans, sans-serif;' +
+		'Roboto=Roboto, sans-serif;' +
+		'Lato=Lato, sans-serif;' +
+		'Oswald=Oswald, sans-serif;' +
+		'Montserrat=Montserrat, sans-serif;' +
+		'PT Sans=PTSans, sans-serif;' +
+		'Raleway=Raleway, sans-serif;' +
+		'Ubuntu=Ubuntu, sans-serif;' +
+		'Times New Roman=TimesNewRoman, Times, serif;'
+// content_style:
+// 	"@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');"
+});
