@@ -11492,3 +11492,24 @@ td.small-width {
 .tox .tox-edit-area__iframe {
   background-color: #1fbba6 !important;
 }
+
+#toast {
+    visibility: hidden;
+    /* min-width: 250px; */
+    background-color: #00ab9f;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    position: fixed;
+    z-index: 9999;
+    right: 0;
+    top: 10%;
+    transform: translateX(-10%);
+    font-size: 17px;
+}
+
+#toast.show {
+    visibility: visible;
+    /* animation: fadein 0.5s, fadeout 0.5s 2.5s; */
+}

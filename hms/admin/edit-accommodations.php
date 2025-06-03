@@ -11,8 +11,8 @@ if(isset($_POST['submit']))
 {
 	$name=$_POST['stayNames'];
     $caption=$_POST['captions'];
-    $feature=$_POST['features'];
-    $description=$_POST['descriptions'];
+    $feature=mysqli_real_escape_string($con, $_POST['features']);
+    $description=mysqli_real_escape_string($con, $_POST['descriptions']);
     $successCount = 0;
     $errorCount = 0;
     $serilalizedImageList = [];
@@ -44,15 +44,15 @@ if(isset($_POST['submit']))
                         array_push($serilalizedImageList, $newFileName);
                         $successCount++;
                     } else {
-                        echo "<p>Failed to upload {$fileName}.</p>";
+                        $msg = "<p>Failed to upload {$fileName}.</p>";
                         $errorCount++;
                     }
                 } else {
-                    echo "<p>{$fileName} has an invalid file type.</p>";
+                    $msg = "<p>{$fileName} has an invalid file type.</p>";
                     $errorCount++;
                 }
             } else {
-                echo "<p>Error uploading {$fileName}.</p>";
+                $msg = "<p>Error uploading {$fileName}.</p>";
                 $errorCount++;
             }
         }
@@ -99,14 +99,20 @@ if(isset($_POST['submit']))
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/plugins.css">
     <link rel="stylesheet" href="assets/css/themes/theme-1.css" id="skin_color" />
-	<script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-    <script type="text/javascript">
+	<!-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script> -->
+    <!-- <script type="text/javascript">
 		bkLib.onDomLoaded(nicEditors.allTextAreas);
-	</script>
+	</script> -->
 
 </head>
 
 <body>
+    <?php if (isset($msg) && !empty($msg)): ?>
+        <div id="toast"><?php echo $msg; ?></div>
+        <?php 
+            include ('../include/toast-script.php'); 
+        ?>
+    <?php endif; ?>
     <div id="app">
         <?php include('include/sidebar.php');?>
         <div class="app-content">
@@ -277,6 +283,7 @@ if(isset($_POST['submit']))
         <script src="vendor/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
         <script src="vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
         <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
+        <script src="https://cdn.tiny.cloud/1/d2v0midup7lpvowewkee6om89twgjbeveofkrrpwsc5z7gm7/tinymce/6/tinymce.min.js"></script>
         <!-- start: CLIP-TWO JAVASCRIPTS -->
         <script src="assets/js/main.js"></script>
         <!-- start: JavaScript Event Handlers for this page -->
