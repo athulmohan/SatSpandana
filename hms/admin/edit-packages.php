@@ -70,6 +70,12 @@ if(isset($_POST['submit']))
 </head>
 
 <body>
+    <?php if (isset($msg) && !empty($msg)): ?>
+        <div id="toast"><?php echo $msg; ?></div>
+        <?php 
+            include ('../include/toast-script.php'); 
+        ?>
+    <?php endif; ?>
     <div id="app">
         <?php include('include/sidebar.php');?>
         <div class="app-content">
