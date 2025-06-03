@@ -28,12 +28,12 @@ if(strlen($_SESSION['id']==0)) {
         mysqli_query($con, "DELETE FROM booking_slots WHERE id ='$id'");
         $msg = "Slot deleted successfully!";
         // $errMsg = "Error deleting slot.";
-        // echo "<script>
-        //     const myTimeout = setTimeout(reRoute, 2000);
-        //     function reRoute() {
-        //         window.location.href ='manage-slots.php'
-        //     }
-        //     </script>";
+        echo "<script>
+            const myTimeout = setTimeout(reRoute, 2000);
+            function reRoute() {
+                window.location.href ='manage-slots.php'
+            }
+            </script>";
     }
 
     if(isset($_POST['submit']))
@@ -70,12 +70,12 @@ if(strlen($_SESSION['id']==0)) {
 
         if(isset($sql) && $sql) {
             $msg="Slot Addedd successfully";
-            // echo "<script>
-            // const myTimeout = setTimeout(reRoute, 2000);
-            // function reRoute() {
-            //     window.location.href ='manage-slots.php'
-            // }
-            // </script>";
+            echo "<script>
+            const myTimeout = setTimeout(reRoute, 2000);
+            function reRoute() {
+                window.location.href ='manage-slots.php'
+            }
+            </script>";
         } else {
             $errMsg="Error adding slot.";
         }
@@ -110,6 +110,12 @@ if(strlen($_SESSION['id']==0)) {
     </script>
 </head>
 <body>
+    <?php if (isset($msg) && !empty($msg)): ?>
+        <div id="toast"><?php echo $msg; ?></div>
+        <?php 
+            include ('../include/toast-script.php'); 
+        ?>
+    <?php endif; ?>
     <div id="app">
         <?php include('include/sidebar.php');?>
         <div class="app-content">

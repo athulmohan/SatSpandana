@@ -12,6 +12,14 @@ if(strlen($_SESSION['id']==0)) {
         $packageid=$_GET['id'];
         mysqli_query($con,"delete from packages where id ='$packageid'");
         $_SESSION['msg']="Package Deleted !!";
+        $msg = "Package Deleted !!";
+
+        echo "<script>
+            const myTimeout = setTimeout(reRoute, 2000);
+            function reRoute() {
+                window.location.href ='manage-packages.php'
+            }
+        </script>";
     }
     ?>
     <!DOCTYPE html>
@@ -39,6 +47,12 @@ if(strlen($_SESSION['id']==0)) {
     </head>
 
     <body>
+        <?php if (isset($msg) && !empty($msg)): ?>
+            <div id="toast"><?php echo $msg; ?></div>
+            <?php 
+                include ('../include/toast-script.php'); 
+            ?>
+        <?php endif; ?>
         <div id="app">
             <?php include('include/sidebar.php');?>
             <div class="app-content">

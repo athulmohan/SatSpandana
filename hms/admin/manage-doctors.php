@@ -12,6 +12,14 @@ if(isset($_GET['del']))
 	$docid=$_GET['id'];
 	mysqli_query($con,"delete from doctors where id ='$docid'");
 	$_SESSION['msg']="One Record Deleted !!";
+    $msg = "One Record Deleted !!";
+
+    echo "<script>
+        const myTimeout = setTimeout(reRoute, 2000);
+        function reRoute() {
+            window.location.href ='manage-doctors.php'
+        }
+    </script>";
 }
 ?>
 <!DOCTYPE html>
@@ -39,6 +47,12 @@ if(isset($_GET['del']))
 </head>
 
 <body>
+    <?php if (isset($msg) && !empty($msg)): ?>
+        <div id="toast"><?php echo $msg; ?></div>
+        <?php 
+            include ('../include/toast-script.php'); 
+        ?>
+    <?php endif; ?>
     <div id="app">
         <?php include('include/sidebar.php');?>
         <div class="app-content">
