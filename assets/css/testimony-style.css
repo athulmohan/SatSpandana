@@ -148,6 +148,7 @@
     border-radius: 15px;
     position: relative;
     z-index: 999;
+    bottom: 39px;
 }
 
 .carousel-tiles {

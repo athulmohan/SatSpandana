@@ -427,6 +427,10 @@ if(isset($_POST['submit']))
 
 
     <!--  ************************* Testimony Starts Here ************************** -->
+
+    <!-- view modal for testimonial -->
+    <?php include_once('hms/include/view-testimony-modal.php'); ?>
+
     <section id="testimony" class="mb-5 testimony container">
         <div class="new-testimonial-change">
             <?php 
@@ -484,11 +488,9 @@ if(isset($_POST['submit']))
                                         <h3><?php echo $witnessName; ?></h3>
                                         <p class="title"><?php echo $witnessDesignation; ?></p>
                                         <h5 style="color: #555;">Rating: <span style="color: #00ab9f;" id="stars-<?php echo $testimonyID; ?>"></span></h5>
-                                        <p><?php echo $displayTestimonial; ?></p>
+                                        <p style="text-align: justify;"><?php echo $displayTestimonial; ?></p>
                                 </div>
                             <?php } ?>
-                            <!-- view modal for testimonial -->
-                            <?php include_once('hms/include/view-testimony-modal.php'); ?>
 
                         </div>
                         <?php } else { ?>
