@@ -445,12 +445,12 @@ if(isset($_POST['submit']))
                     <p>
                     SatSpandana beckons the infirm to a haven of profound healing. For those adrift in life's relentless tide, it offers a sacred harbor for the rekindling of body, mind, and spirit.
                     </p>
-                    <div class="<?php echo ($testimonyCount > 2) ? 'testimonial-nav' : 'd-none testimonial-nav'; ?>">
+                    <div class="<?php echo ($testimonyCount > 2) ? 'testimonial-nav' : 'disabled-link testimonial-nav'; ?>">
                         <button id="prevBtn">&#8592;</button>
                         <button id="nextBtn">&#8594;</button>
                     </div>
                     <!-- <a href="#" class="view-more">View More</a> -->
-                    <button class="btn btn-secondary addTestimony btn-success" data-toggle="modal" data-target="#addTestimonyModal">+ Add Testimonials</button>
+                    <button class="btn btn-secondary addTestimony btn-success" data-toggle="modal" data-target="#addTestimonyModal">Add Testimonials</button>
                     <div class="modal fade" id="addTestimonyModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="addTestimony" aria-hidden="true">
                         <?php include_once('hms/include/add-testimony-modal.php'); ?>
                     </div>
