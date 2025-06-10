@@ -473,9 +473,9 @@ if(isset($_POST['submit']))
                                 $rating = $row['rating'];
                                 $testimonyImgPath = "assets/images/testimony/".$witnessImage;
 
-                                $displayTestimonial = (strlen($testimony) > 100) 
-                                                ? substr($testimony, 0, 100) . '...' 
-                                                : $testimony;
+                                $displayTestimonial = (strlen(strip_tags($testimony)) > 100) 
+                                                ? substr(strip_tags($testimony), 0, 100) . '...' 
+                                                : strip_tags($testimony);
 
                                 ?>
                                 <div class="testimonial-item <?php echo $item_additional_style; ?>" 
@@ -709,7 +709,7 @@ if(isset($_POST['submit']))
 <script src="assets/plugins/scroll-nav/js/jquery.easing.min.js"></script>
 <script src="assets/plugins/scroll-nav/js/scrolling-nav.js"></script>
 <script src="assets/plugins/scroll-fixed/jquery-scrolltofixed-min.js"></script>
-
+<script src="https://cdn.tiny.cloud/1/d2v0midup7lpvowewkee6om89twgjbeveofkrrpwsc5z7gm7/tinymce/6/tinymce.min.js"></script>
 <script src="assets/js/script.js"></script>
 <script src="assets/js/testimony-script.js"></script>
 <script src="assets/js/new-testimony-script.js"></script>

@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label for="testimony_textarea">Testimonial</label>
-                    <textarea class="form-control" name="testimony" id="testimony_textarea" cols="10" rows="10" placeholder="Type here..."></textarea>
+                    <textarea class="form-control canvas-text-editor" name="testimony" id="testimony_textarea" cols="10" rows="10" placeholder="Type here..."></textarea>
                     <div id="wordCountMessage" style="color: red; margin-top: 5px;"></div>
                 </div>
                 <div class="form-group">

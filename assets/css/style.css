@@ -1258,3 +1258,12 @@ header {
   text-decoration: none;
   cursor: not-allowed;
 }
+
+.btn {
+  font-family: cursive !important;
+  font-size: 1rem;
+}
+
+.tox-statusbar {
+  display: none !important;
+}

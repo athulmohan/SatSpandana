@@ -35,7 +35,7 @@
 
         $('#modalName').text(name);
         $('#modalDesignation').text(designation);
-        $('#modalTestimony').text(testimony);
+        $('#modalTestimony').html(testimony);
         $('#divModalImage').html('<img id="modalImage" src="'+image+'" alt="'+name+'" style="width: 150px; height: auto; border-radius: 50%;">');
         $('#modalRating').html('<span>'+stars+'</span>');
 
