@@ -20,6 +20,9 @@ while($package=mysqli_fetch_assoc($packageSql)) {
     }
     $sql = 'select * from packagedetails where package_id = "'.$package['id'].'"';
     $packageDetailsSql = mysqli_query($con, $sql);
+    $modalId = "packageModal" . $ind;
+
+    $package_modal_tb_additional_style = (($ind % 2) == 0) ? 'package-modal-tb-even' : 'package-modal-tb-odd';
 ?>
     <?php
     include_once('service-details.php');
@@ -31,10 +34,10 @@ while($package=mysqli_fetch_assoc($packageSql)) {
                 <p>Take a look at some of our key <?php echo $package['specialization']; ?> Packages</p>
             </div>
         <?php } ?>
-        <div class="package-bg-img <?php echo strtolower($package['specialization']); ?>-bg-img-<?php echo $ind; ?>">
-            <div class="container">
+        <div class="<?php echo $package_modal_tb_additional_style; ?> <?php //echo strtolower($package['specialization']); ?>-bg-img-<?php echo $ind; ?>"> <!-- package-bg-img -->
+            <div class="package-details-list">
                 <div class="content-bg-layer">
-                    <div id="therapy" class="therapy py-5">
+                    <div id="therapy" class="container therapy py-5">
                         <hr>
                         </hr>
                         <div class="text">* <?php echo $package['treatmentName']; ?></div>
@@ -42,32 +45,51 @@ while($package=mysqli_fetch_assoc($packageSql)) {
                         </hr>
                         <p><?php echo $package['description']; ?></p>
 
-                        <div class="mt-5">
-                            <div class="col-md-12" style="overflow-x:auto;">
-                                <table id="<?php echo $tbCls; ?>" class="table table-striped physio-dataTable" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Package Name</th>
-                                            <th>No of Days</th>
-                                            <th>Without Accommodation</th>
-                                            <th>Single Occupancy</th>
-                                            <th>Double Occupancy</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                        while($packageDetails=mysqli_fetch_assoc($packageDetailsSql)) { 
-                                        ?>
-                                            <tr>
-                                                <td><?php echo $packageDetails['packageName'] ?></td>
-                                                <td><?php echo $packageDetails['days'] ?></td>
-                                                <td><?php echo $packageDetails['without'] ?></td>
-                                                <td><?php echo $packageDetails['singleOccupancy'] ?></td>
-                                                <td><?php echo $packageDetails['doubleOccupancy'] ?></td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
+                        <!-- Button to trigger modal -->
+                        <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#<?php echo $modalId; ?>">
+                            View Package Details
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade modal-package-details" id="<?php echo $modalId; ?>" tabindex="-1" aria-labelledby="<?php echo $modalId; ?>Label" aria-hidden="true">
+                            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                <div class="modal-content <?php echo $package_modal_tb_additional_style; ?>">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="<?php echo $modalId; ?>Label">Package Details - <?php echo $package['treatmentName']; ?></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body"> <!-- class="mt-5" -->
+                                        <div class="table-responsive"> <!-- col-md-12  style="overflow-x:auto;" -->
+                                            <table id="<?php echo $tbCls; ?>" class="table table-striped physio-dataTable" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Package Name</th>
+                                                        <th>No of Days</th>
+                                                        <th>Without Accommodation</th>
+                                                        <th>Single Occupancy</th>
+                                                        <th>Double Occupancy</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                    while($packageDetails=mysqli_fetch_assoc($packageDetailsSql)) { 
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $packageDetails['packageName'] ?></td>
+                                                            <td><?php echo $packageDetails['days'] ?></td>
+                                                            <td><?php echo $packageDetails['without'] ?></td>
+                                                            <td><?php echo $packageDetails['singleOccupancy'] ?></td>
+                                                            <td><?php echo $packageDetails['doubleOccupancy'] ?></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

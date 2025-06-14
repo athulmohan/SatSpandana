@@ -12,9 +12,9 @@
                     <h3 class="font-weight-bold"><?php echo strtoupper($packageParam); ?></h3>
                 </div>
                 <div class="package-bg-img <?php echo strtolower($service['specilization']); ?>-bg-img-<?php echo $i; ?>">
-                    <div class="container">
-                        <div class="row content-bg-layer">
-                            <div id="<?php echo strtolower($service['specilization']); ?>-service" class="services py-5">
+                    <div class="">
+                        <div class="content-bg-layer">
+                            <div id="<?php echo strtolower($service['specilization']); ?>-service" class="container services py-5">
                                 <p><?php echo $service['programs']; ?></p>
                             </div>
                         </div>

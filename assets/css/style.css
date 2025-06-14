@@ -881,13 +881,13 @@ header {
   background-color: #ffffff;
 }
 #detox-dataTable {
-  background-color: #043838;
+  /* background-color: #043838; */
 }
 #destress-dataTable {
-  background-color: #043838;
+  /* background-color: #043838; */
 }
 #spinal-dataTable {
-  background-color: #043838;
+  /* background-color: #043838; */
 }
 
 .ball {
@@ -1266,4 +1266,28 @@ header {
 
 .tox-statusbar {
   display: none !important;
+}
+
+.package-modal-tb-even {
+  background: linear-gradient(0deg, #000000, #00ab9f 100%) no-repeat;
+  color: #ffffff;
+}
+
+.package-modal-tb-odd {
+  background: linear-gradient(0deg, #00ab9f, #000000 100%) no-repeat;
+  color: #ffffff;
+}
+
+.modal-package-details .modal-header {
+  border-bottom: none;
+}
+
+.package-details-list button {
+  background-color: #00ab9f;
+  border-color: #00ab9f;
+}
+
+.package-details-list .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+  background-color: #00ab9f;
+  border-color: #00ab9f;
 }
