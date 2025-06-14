@@ -132,6 +132,31 @@
 
                     </ul>
                 </li>
+                <!-- Package Query Section -->
+                 <li>
+                    <a href="javascript:void(0)">
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="ti-comments-smiley"></i>
+                            </div>
+                            <div class="item-inner">
+                                <span class="title"> Package Queries </span><i class="icon-arrow"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="package-unread-queries.php">
+                                <span class="title"> Unread Query </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="package-read-query.php">
+                                <span class="title"> Read Query </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="no-display">
                     <a href="doctor-logs.php">
                         <div class="item-content">
