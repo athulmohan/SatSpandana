@@ -74,7 +74,7 @@
 
 
     <!-- ################# Packages Starts Here #######################--->
-    <div id="packages" class="container-fluid py-5">
+    <div id="packages" class="container-fluid">
         <div class="inner-title mb-0">
             <h2 class="left"><span>SERVICES</span></h2>
             <h2 class="right">
