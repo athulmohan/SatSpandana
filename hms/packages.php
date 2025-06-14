@@ -10,6 +10,43 @@
     }
 
     $list = ['ayurveda', 'fitness', 'physiotherapy'];
+
+    if(isset($_POST) && isset($_POST['enquiry_submit']))
+{	
+    // print_r($_POST);
+    $name = $_POST['name'];
+	$email = $_POST['email'];
+	$contact_no = $_POST['contact_no'];
+	$enquiry_on_package = $_POST['enquiry_on_package'];
+	$enquiry_note = $_POST['enquiry_note'];
+	
+	$sql=mysqli_query($con,"insert into package_enquiry(name,email,contact_no,enquiry_on_package,enquiry_note) values('$name','$email','$contact_no','$enquiry_on_package','$enquiry_note')");
+	if($sql)
+	{
+        include ('include/send-mail.php');
+
+        $to = 'admin@satspandana.com';
+        $subject = 'Welcome to SatSpandana Wellness';
+        $message = '<h1>Thank you for contacting us!</h1>';
+        $message .= '<p>We are happy to have you.Your query is succesfully submitted. We will get touch with you shortly.</p><br />';
+        $message .= '<h3>Package Enquiry</h3>';
+        $message .= '<p><i>"' . $enquiry_note . '"</i></p>';
+
+        $enquiryMsg = "Your query successfully submitted.";
+
+        if(sendEmail($email, $to, $subject, $message)) {
+            $enquiryMsg = "Enquiry submitted successfully. We will get back to you soon.";
+        } else {
+            $enquiryMsg = "Enquiry submitted, but failed to send email notification.";
+        }
+		// echo "<script>
+        // const myTimeout = setTimeout(reRoute, 2000);
+        // function reRoute() {
+        //     window.location.href ='index.php'
+        // }
+        // </script>";
+	}
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -28,6 +65,12 @@
 </head>
 
 <body>
+    <?php if (isset($enquiryMsg) && !empty($enquiryMsg)): ?>
+        <div id="toast"><?php echo $enquiryMsg; ?></div>
+        <?php 
+            include ('include/toast-script.php'); 
+        ?>
+    <?php endif; ?>
     <!-- ################# Header Starts Here#######################--->
     <?php include_once('include/website-header.php') ?>
 
@@ -136,6 +179,16 @@
         <div class="container">
             Sat Spandana
         </div>
+    </div>
+
+    <!-- Enquiry Floating Icon -->
+    <button id="enquiryBtn" class="btn btn-success rounded-circle shadow" data-toggle="modal" data-target="#packageEnquiryModal" title="Enquiry">
+        <!-- <i class="bi bi-chat-dots-fill"></i> -->
+        <i class="fas fa-comments"></i>
+    </button>
+    <!-- Enquiry Modal -->
+    <div class="modal fade" id="packageEnquiryModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="submitPackageEnquiry" aria-hidden="true">
+        <?php include_once('include/package-enquiry-modal.php'); ?>
     </div>
 </body>
 

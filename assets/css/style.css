@@ -1291,3 +1291,25 @@ header {
   background-color: #00ab9f;
   border-color: #00ab9f;
 }
+
+.popup-package-enquiry {
+  color: #ffffff !important;
+  cursor: pointer;
+}
+.popup-package-enquiry:hover {
+  color: #000000 !important;
+  cursor: pointer;
+}
+
+#enquiryBtn {
+  position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    z-index: 1050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -7,7 +7,7 @@
             <i class="ti-align-justify"></i>
         </a>
         <a class="navbar-brand" href="#">
-            <h2 style="padding-top:20% ">SAT SPANDANA</h2>
+            <h2 style="padding-top:20% ">SATSPANDANA</h2>
         </a>
         <a href="#" class="sidebar-toggler pull-right visible-md visible-lg" data-toggle-class="app-sidebar-closed"
             data-toggle-target="#app">
@@ -25,7 +25,7 @@
         <ul class="nav navbar-right">
             <!-- start: MESSAGES DROPDOWN -->
             <li style="padding-top:2% ">
-                <h2>Sat Spandana</h2>
+                <h2>SatSpandana</h2>
             </li>
 
 
