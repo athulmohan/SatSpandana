@@ -30,9 +30,9 @@
                     <label for="rating">Rating (1-5)</label>
                     <input type="number" class="form-control" id="rating" name="rating" max="5" min="0">
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="testimony_submit" id="testimony_submit" class="btn btn-primary">Add</button>
+                <div class="modal-footer testimony-footer">
+                    <button type="button" class="btn btn-o btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" name="testimony_submit" id="testimony_submit" class="btn btn-o btn-primary">Add</button>
                 </div>
             </form>
         </div>

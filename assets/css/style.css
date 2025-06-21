@@ -1313,3 +1313,17 @@ header {
     align-items: center;
     justify-content: center;
 }
+
+.testimony-footer {
+  float: left;
+}
+.btn-o {
+    background: none !important;
+}
+.testimony-footer .btn-primary.btn-o {
+    border: 1px solid #007AFF;
+    color: #007AFF;
+}
+.testimony-footer .btn-secondary.btn-o {
+  color: #6c757d;
+}
