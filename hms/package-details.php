@@ -112,14 +112,14 @@ while($package=mysqli_fetch_assoc($packageSql)) {
             <?php } 
             else if($countSql === 0 || $rowcount === 0 || ($rowcount === 0 && $packageParam !== '')) {
             ?>
-                <section id="no-package" class="no-package mt-5">
+                <!-- <section id="no-package" class="no-package mt-5">
                     <div class="container-fluid">
                         <div class="inner-title">
                             <h3>No Packages Available ...</h3>
                             <p>More packages are in the queue.</p>
                         </div>
                     </div>
-                </section>
+                </section> -->
             <?php } else { ?>
             <!-- <section id="no-package" class="no-package mt-5">
                 <div class="container-fluid">
