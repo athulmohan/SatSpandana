@@ -77,6 +77,27 @@ $(window).on("load resize", function() {
   }
 });
 
+window.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('header');
+  if (!header) return;
+
+  // Find all <div> elements after <header>
+  let found = false;
+  let next = header.nextElementSibling;
+
+  while (next && !found) {
+    if (next.tagName.toLowerCase() === 'div' && next.style.float === 'none') {
+      console.log('Found div with float: none', next);
+      found = true;
+    }
+    next = next.nextElementSibling;
+  }
+
+  if (!found) {
+    console.log('No matching <div> with style float: none; found after <header>.');
+  }
+});
+
 tinymce.init({
 	selector: 'textarea.canvas-text-editor',
 	plugins: 'lists link image table code',
