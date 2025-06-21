@@ -50,7 +50,9 @@
                 <div class="row cf-ro">
                     <div class="col-sm-3"><label></label></div>
                     <div class="col-sm-8">
-                        <button class="btn btn-success btn-sm" type="submit" name="enquiry_submit">Submit Enquiry</button>
+                        <button class="btn btn-o btn-success btn-sm theme-font-color" type="submit" name="enquiry_submit">
+                            Submit Enquiry
+                        </button>
                     </div>
                 </div>
             </form>

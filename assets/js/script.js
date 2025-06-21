@@ -80,7 +80,7 @@ $(window).on("load resize", function() {
 tinymce.init({
 	selector: 'textarea.canvas-text-editor',
 	plugins: 'lists link image table code',
-	toolbar: 'undo redo | styles | fontsize | bold italic underline | alignleft aligncenter alignright alignjustify | outdent indent',
+	toolbar: 'numlist bullist undo redo | styles | fontsize | bold italic underline | alignleft aligncenter alignright alignjustify | outdent indent',
 	// font_family_formats:
 		// 'Arial=Arial, Helvetica, sans-serif;' +
 		// 'Courier New=CourierNew,courier,monospace;' +

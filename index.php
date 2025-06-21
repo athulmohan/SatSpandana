@@ -144,9 +144,9 @@ if(isset($_POST['submit']))
     <!-- ################# Slider Starts Here#######################--->
     <div class="slider-detail">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <div class="d-none d-md-block carousel-marker">
+            <!-- <div class="d-none d-md-block carousel-marker">
                 "HEALTH AND WELLNESS"
-            </div>
+            </div> -->
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>

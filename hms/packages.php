@@ -75,74 +75,36 @@
     <?php include_once('include/website-header.php') ?>
 
     <!-- ################# Slider Starts Here#######################--->
-
-    <!-- <div class="slider-detail">
-
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-                <ol class="carousel-indicators">
-                    <li data-target="#carouselExampleIndicators" data-slide-to="1" class="active"></li>
-                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                </ol>
-
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="../assets/images/slider/slider_1.jpg" alt="First slide">
-                        <div class="carousel-cover"></div>
-                        <div class="carousel-caption vdg-cur d-none d-md-block">
-                            <h5 class="animated bounceInDown text-uppercase">Sat Spandana</h5>
-                        </div>
-                    </div>
-
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="../assets/images/slider/slider_2.jpg" alt="Second slide">
-                        <div class="carousel-cover"></div>
-                        <div class="carousel-caption vdg-cur d-none d-md-block">
-                            <h5 class="animated bounceInDown text-uppercase">Sat Spandana</h5>
-                        </div>
-                    </div>
-
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-
-
-        </div> -->
+    <!-- Removed slider section from the packages page ... -->
 
 
     <!-- ################# Packages Starts Here #######################--->
     <div id="packages" class="container-fluid">
-        <div class="inner-title mb-0">
+        <!-- <div class="inner-title mb-0">
             <h2 class="left"><span>SERVICES</span></h2>
             <h2 class="right">
-                <!-- <span>Take a look at some</span> -->
-
-                <section > <!--class="stage" -->
-                    <a href="packages.php?param=<?php echo bin2hex('all'); ?>" class="ball bubble" title="Click Me to view All Packages...">
+                <section >
+                    <a href="packages.php?param=<?php //echo bin2hex('all'); ?>" class="ball bubble" title="Click Me to view All Packages...">
                         All
                     </a>
                 </section>
             </h2>
-        </div>
+        </div> -->
         <?php
         if($packageParam === 'all' || $packageParam !== '') {
         ?>
-            <section id="physio-package" class="physio-package mt-5">
-                <div class="container-fluid">
-                    <?php include_once('package-details.php'); ?>
+            <section class="package-section-body">
+                <div id="physio-package" class="physio-package pt-5">
+                    <div class="container-fluid">
+                        <?php include_once('package-details.php'); ?>
+                    </div>
                 </div>
-            </section>
+            <section>
         <?php }?>
     </div>
 
     <!-- ################# Footer Starts Here#######################--->
-    <footer class="footer mt-5">
+    <footer class="footer pt-5">
         <div class="container">
             <div class="row">
 
@@ -177,7 +139,7 @@
     </footer>
     <div class="copy">
         <div class="container">
-            Sat Spandana
+            Satspandana
         </div>
     </div>
 

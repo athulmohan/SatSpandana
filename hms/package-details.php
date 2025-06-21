@@ -23,6 +23,7 @@ while($package=mysqli_fetch_assoc($packageSql)) {
     $modalId = "packageModal" . $ind;
 
     $package_modal_tb_additional_style = (($ind % 2) == 0) ? 'package-modal-tb-even' : 'package-modal-tb-odd';
+    $package_modal_additional_style = (($ind % 2) == 0) ? 'package-bg-even' : 'package-bg-odd';
 ?>
     <?php
     include_once('service-details.php');
@@ -34,9 +35,9 @@ while($package=mysqli_fetch_assoc($packageSql)) {
                 <p>Take a look at some of our key <?php echo $package['specialization']; ?> Packages</p>
             </div>
         <?php } ?>
-        <div class="<?php echo $package_modal_tb_additional_style; ?> <?php //echo strtolower($package['specialization']); ?>-bg-img-<?php echo $ind; ?>"> <!-- package-bg-img -->
+        <div class="<?php echo $package_modal_additional_style; ?> <?php //echo strtolower($package['specialization']); ?>-bg-img-<?php echo $ind; ?>"> <!-- package-bg-img -->
             <div class="package-details-list">
-                <div class="content-bg-layer">
+                <div class="package-content-bg-layer">
                     <div id="therapy" class="container therapy py-5">
                         <hr>
                         </hr>

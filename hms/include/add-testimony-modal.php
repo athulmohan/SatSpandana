@@ -32,7 +32,7 @@
                 </div>
                 <div class="modal-footer testimony-footer">
                     <button type="button" class="btn btn-o btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" name="testimony_submit" id="testimony_submit" class="btn btn-o btn-primary">Add</button>
+                    <button type="submit" name="testimony_submit" id="testimony_submit" class="btn btn-o btn-success theme-font-color">Add</button>
                 </div>
             </form>
         </div>
