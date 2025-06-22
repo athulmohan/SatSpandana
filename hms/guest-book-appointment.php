@@ -19,32 +19,33 @@ if(isset($_POST['submit']))
     
     $user_query=mysqli_query($con,"insert into users(fullname,address,city,gender,email,contact) values('$fname','$address','$city','$gender','$email','$contactno')");
     
-    // checking for the record exist for same name, email and contact number
-    $patientDocId = $_POST['doctor'];
-    $existQuery = "SELECT COUNT(*) AS record_count
-                    FROM tblpatient
-                    WHERE Docid = '$patientDocId'
-                    AND LOWER(TRIM(PatientName)) = LOWER(TRIM('$fname'))
-                    AND TRIM(PatientContno) = TRIM('$contactno')
-                    AND LOWER(TRIM(PatientEmail)) = LOWER(TRIM('$email'))";
-
-    $result = mysqli_query($con, $existQuery);
-    if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $record_count = $row['record_count'];
-        if ($record_count == 0) {
-            $patient_query=mysqli_query($con,
-            "insert into tblpatient(Docid, PatientName,PatientContno,PatientEmail,PatientGender,PatientAdd) 
-            values('$patientDocId', '$fname','$contactno','$email','$gender','$address')");
-        }
-    }
-
     if($user_query > 0)
     {
+        $userid=mysqli_insert_id($con);
+
+        // checking for the record exist for same name, email and contact number
+        $patientDocId = $_POST['doctor'];
+        $existQuery = "SELECT COUNT(*) AS record_count
+                        FROM tblpatient
+                        WHERE Docid = '$patientDocId'
+                        AND LOWER(TRIM(PatientName)) = LOWER(TRIM('$fname'))
+                        AND TRIM(PatientContno) = TRIM('$contactno')
+                        AND LOWER(TRIM(PatientEmail)) = LOWER(TRIM('$email'))";
+
+        $result = mysqli_query($con, $existQuery);
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $record_count = $row['record_count'];
+            if ($record_count == 0) {
+                $patient_query=mysqli_query($con,
+                "insert into tblpatient(Docid, PatientName,PatientContno,PatientEmail,PatientGender,PatientAdd) 
+                values('$patientDocId', '$fname','$contactno','$email','$gender','$address')");
+            }
+        }
+
         $specilization=$_POST['Doctorspecialization'];
         $doctorid=$_POST['doctor'];
         $locationid=$_POST['location'];
-        $userid=mysqli_insert_id($con);
         $fees=$_POST['fees'];
         $appdate=$_POST['appdate'];
         $time=$_POST['apptime'];
