@@ -11485,7 +11485,7 @@ td.small-width {
   text-align: center;
   color: #ffffff;
 }
-.tox-statusbar {
+.tox-statusbar, .tox-promotion {
   display: none !important;
 }
 

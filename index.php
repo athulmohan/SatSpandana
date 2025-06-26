@@ -709,7 +709,7 @@ if(isset($_POST['submit']))
 <script src="assets/plugins/scroll-nav/js/jquery.easing.min.js"></script>
 <script src="assets/plugins/scroll-nav/js/scrolling-nav.js"></script>
 <script src="assets/plugins/scroll-fixed/jquery-scrolltofixed-min.js"></script>
-<script src="https://cdn.tiny.cloud/1/d2v0midup7lpvowewkee6om89twgjbeveofkrrpwsc5z7gm7/tinymce/6/tinymce.min.js"></script>
+<script src="hms/assets/js/tinymce/tinymce.min.js"></script>
 <script src="assets/js/script.js"></script>
 <script src="assets/js/testimony-script.js"></script>
 <script src="assets/js/new-testimony-script.js"></script>

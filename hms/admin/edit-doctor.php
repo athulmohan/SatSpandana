@@ -313,7 +313,7 @@ if(isset($_POST['submit']))
         <script src="vendor/bootstrap-timepicker/bootstrap-timepicker.min.js"></script>
         <!-- end: JAVASCRIPTS REQUIRED FOR THIS PAGE ONLY -->
 		<!-- <script src="../../assets/js/tinymce.min.js"></script> -->
-		<script src="https://cdn.tiny.cloud/1/d2v0midup7lpvowewkee6om89twgjbeveofkrrpwsc5z7gm7/tinymce/6/tinymce.min.js"></script>
+		<script src="../assets/js/tinymce/tinymce.min.js"></script>
         <!-- start: CLIP-TWO JAVASCRIPTS -->
         <script src="assets/js/main.js"></script>
         <!-- start: JavaScript Event Handlers for this page -->
