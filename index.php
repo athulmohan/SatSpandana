@@ -435,7 +435,7 @@ if(isset($_POST['submit']))
         <div class="new-testimonial-change">
             <?php 
                 $testimonySql=mysqli_query($con,"SELECT * from testimony where status=1"); 
-                $testimonyCount=mysqli_num_rows($testimonySql);
+                $testimonyCount=($testimonySql) ? mysqli_num_rows($testimonySql) : 0;
                 $itemsPerSlide = 3;
                 $totalSlides = ceil($testimonyCount / $itemsPerSlide);
             ?>
